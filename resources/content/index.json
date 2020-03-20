@@ -1,0 +1,6 @@
+{
+    "view": "pages.index",
+    "path": "/",
+    "title": "Let's get started",
+    "description": "Creating a project with Cleaver takes less than 5 minutes using Composer and NPM, and your sites are built in milliseconds."
+}
