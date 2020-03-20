@@ -55,7 +55,7 @@
                 <div class="w-full lg:w-1/3 px-4 mb-8 lg:mb-0">
                     <div class="bg-white shadow hover:shadow-xl transition-shadow duration-200">
                         <a class="block pt-4 px-6 hover:opacity-50 transition-opacity duration-200" href="https://usethekeyboard.com" target="_blank" rel="noreferrer">
-                            <img class="block" src="https://larametrics.com/screenshot-larametrics-dashboard.png">
+                            <img class="block" src="/assets/images/screenshot-use-the-keyboard.png">
                         </a>
                         <div class="py-4 px-6">
                             <p class="text-gray-700 text-lg leading-relaxed my-2"><span class="text-gray-900 font-semibold">Use The Keyboard</span> is a simplistic and open-sourced repository of keyboard shortcuts for a variety of websites and apps.</p>
@@ -66,7 +66,7 @@
                 <div class="w-full lg:w-1/3 px-4 mb-8 lg:mb-0">
                     <div class="bg-white shadow hover:shadow-xl transition-shadow duration-200">
                         <a class="block pt-4 px-6 hover:opacity-50 transition-opacity duration-200" href="https://usethekeyboard.com" target="_blank" rel="noreferrer">
-                            <img class="block" src="https://larametrics.com/screenshot-larametrics-dashboard.png">
+                            <img class="block" src="/assets/images/screenshot-larametrics-dashboard.png">
                         </a>
                         <div class="py-4 px-6">
                             <p class="text-gray-700 text-lg leading-relaxed my-2"><span class="text-gray-900 font-semibold">Larametrics</span> is a self-hosted metrics and notifications platform for Laravel apps, built with production environments in mind.</p>
@@ -77,7 +77,7 @@
                 <div class="w-full lg:w-1/3 px-4">
                     <div class="bg-white shadow hover:shadow-xl transition-shadow duration-200">
                         <a class="block pt-4 px-6 hover:opacity-50 transition-opacity duration-200" href="https://usethekeyboard.com" target="_blank" rel="noreferrer">
-                            <img class="block" src="https://larametrics.com/screenshot-larametrics-dashboard.png">
+                            <img class="block" src="/assets/images/pdfblade-social-image-zoomed.png">
                         </a>
                         <div class="py-4 px-6">
                             <p class="text-gray-700 text-lg leading-relaxed my-2"><span class="text-gray-900 font-semibold">PDFBlade</span> is a developer-friendly HTML to PDF API with robust documentation and a wide variety of formatting options.</p>
