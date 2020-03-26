@@ -14,13 +14,13 @@
     <meta property="og:description" content="{{ $description ?? '' }}" />
     <meta property="og:url" content="https://aschmelyun.com" />
     <meta property="og:site_name" content="Andrew Schmelyun" />
-    <meta property="og:image" content="" />
+    <meta property="og:image" content="https://aschmelyun.com/assets/images/andrew-schmelyun-profile.jpg" />
 
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:description" content="{{ $description ?? '' }}" />
     <meta name="twitter:title" content="{{ $title }}" />
     <meta name="twitter:site" content="@aschmelyun" />
-    <meta name="twitter:image" content="" />
+    <meta name="twitter:image" content="https://aschmelyun.com/assets/images/andrew-schmelyun-profile.jpg" />
 
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
