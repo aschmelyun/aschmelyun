@@ -65,7 +65,7 @@
                 </div>
                 <div class="w-full lg:w-1/3 px-4 mb-8 lg:mb-0">
                     <div class="bg-white shadow hover:shadow-xl transition-shadow duration-200">
-                        <a class="block pt-4 px-6 hover:opacity-50 transition-opacity duration-200" href="https://usethekeyboard.com" target="_blank" rel="noreferrer">
+                        <a class="block pt-4 px-6 hover:opacity-50 transition-opacity duration-200" href="https://larametrics.com" target="_blank" rel="noreferrer">
                             <img class="block" src="/assets/images/screenshot-larametrics-dashboard.png">
                         </a>
                         <div class="py-4 px-6">
@@ -76,7 +76,7 @@
                 </div>
                 <div class="w-full lg:w-1/3 px-4">
                     <div class="bg-white shadow hover:shadow-xl transition-shadow duration-200">
-                        <a class="block pt-4 px-6 hover:opacity-50 transition-opacity duration-200" href="https://usethekeyboard.com" target="_blank" rel="noreferrer">
+                        <a class="block pt-4 px-6 hover:opacity-50 transition-opacity duration-200" href="https://pdfblade.com" target="_blank" rel="noreferrer">
                             <img class="block" src="/assets/images/pdfblade-social-image-zoomed.png">
                         </a>
                         <div class="py-4 px-6">

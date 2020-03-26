@@ -1,0 +1,56 @@
+{
+    "view": "pages.projects",
+    "path": "/projects",
+    "title": "Andrew Schmelyun's Projects",
+    "description": "All of the current and previously-developed open and closed-source apps, websites, and packages from Andrew Schmelyun.",
+    "projects": [
+        {
+            "title": "Use The Keyboard",
+            "description": "is a simplistic and open-sourced repository of keyboard shortcuts for a variety of websites and apps.",
+            "link": "https://usethekeyboard.com",
+            "image": "/assets/images/screenshot-use-the-keyboard.png"
+        },
+        {
+            "title": "Larametrics",
+            "description": "is a self-hosted metrics and notifications platform for Laravel apps, built with production environments in mind.",
+            "link": "https://larametrics.com",
+            "image": "/assets/images/screenshot-larametrics-dashboard.png"
+        },
+        {
+            "title": "PDFBlade",
+            "description": "is a developer-friendly HTML to PDF API with robust documentation and a wide variety of formatting options.",
+            "link": "https://pdfblade.com",
+            "image": "/assets/images/pdfblade-social-image-zoomed.png"
+        },
+        {
+            "title": "Cleaver",
+            "description": "is what this site was built with. It's a blazing-fast static site generator that uses Laravel's Blade templating engine.",
+            "link": "https://usecleaver.com"
+        },
+        {
+            "title": "Budget.cool",
+            "description": "is a simplistic and free budgeting app with a manual-only entry mode. Built as a Vue SPA with a Laravel backend.",
+            "link": "https://budget.cool"
+        },
+        {
+            "title": "Larahawk",
+            "description": "is an easy-to-setup, super simple error reporting and notifications platform for Laravel applications.",
+            "link": "https://larahawk.com"
+        },
+        {
+            "title": "Passhints",
+            "description": "is a simplistic and open-sourced repository of password requirements for a variety of websites and apps.",
+            "link": "https://passhints.co"
+        },
+        {
+            "title": "Watch The Credits",
+            "description": "is an online library of movies, detailing whether or not they contain mid or after-credit scenes and spoilers.",
+            "link": "https://watchthecredits.com"
+        },
+        {
+            "title": "docker-compose-laravel",
+            "description": "is a very basic Docker workflow for local Laravel app development, originally built for a video series on the same subject.",
+            "link": "https://github.com/aschmelyun"
+        }
+    ]
+}

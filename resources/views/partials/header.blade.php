@@ -6,10 +6,10 @@
         <div class="w-full md:w-1/2 pt-2 md:pt-0">
             <nav>
                 <ul class="flex items-center justify-end">
-                    <li class="mr-8"><a href="#" class="text-lg font-semibold py-1 hover:text-red-600 transition-color duration-200">Projects</a></li>
-                    <li class="mr-8"><a href="#" class="text-lg font-semibold py-1 hover:text-red-600 transition-color duration-200">Work</a></li>
-                    <li class="mr-8"><a href="#" class="text-lg font-semibold py-1 hover:text-red-600 transition-color duration-200">Videos</a></li>
-                    <li><a href="#" class="text-lg font-semibold py-1 hover:text-red-600 transition-color duration-200">Articles</a></li>
+                    <li class="mr-8"><a href="/projects" class="text-lg font-semibold py-1 hover:text-red-600 transition-color duration-200">Projects</a></li>
+                    <li class="mr-8"><a href="/videos" class="text-lg font-semibold py-1 hover:text-red-600 transition-color duration-200">Videos</a></li>
+                    <li class="mr-8"><a href="/articles" class="text-lg font-semibold py-1 hover:text-red-600 transition-color duration-200">Articles</a></li>
+                    <li><a href="mailto:me@aschmelyun.com" class="text-lg font-semibold py-1 hover:text-red-600 transition-color duration-200">Contact</a></li>
                 </ul>
             </nav>
         </div>
