@@ -2,8 +2,8 @@
 @section('content')
     <div class="flex">
         <div class="w-full lg:w-7/12">
-            <h1 class="text-4xl lg:text-5xl font-semibold">Here's my projects</h1>
-            <div class="text-4xl lg:text-5xl font-semibold mt-8 lg:mt-16">These are closed and open-source websites, apps, and packages I've built.</div>
+            <h1 class="text-4xl lg:text-5xl font-semibold">Here's my projects.</h1>
+            <div class="text-4xl lg:text-5xl font-semibold mt-8 lg:mt-16">Closed and open-source websites, apps, and packages I've built.</div>
         </div>
     </div>
     <div class="flex bg-gray-100 py-6 lg:py-8 px-4 lg:px-12 pb-6 lg:pb-12 mt-24">

@@ -1,0 +1,48 @@
+{
+    "view": "pages.articles",
+    "path": "/articles",
+    "title": "Andrew Schmelyun's Articles",
+    "description": "A small selection of recently-published tutorials, demos, and other articles on web development from Andrew Schmelyun.",
+    "articles": [
+        {
+            "title": "Getting started with Amazon S3 storage in Laravel",
+            "description": "I've worked in the past on a few projects that use Amazon's S3 service to store images and files from Laravel applications. Even though the functionality is pretty much built into the framework, the process of getting started can be a little jarring, especially to those who don't have a whole lot of experience with the AWS suite.",
+            "link": "https://dev.to/aschmelyun/getting-started-with-amazon-s3-storage-in-laravel-5b6d"
+        },
+        {
+            "title": "Crafting a better local Laravel dev environment with Docker",
+            "description": "Want to skip the detailed tutorial altogether and dive into this yourself? Install Docker for your OS, clone this repo, add your Laravel app files to the src directory, and from the root project directory you just cloned run: docker-compose up -d --build.",
+            "link": "https://dev.to/aschmelyun/crafting-a-better-local-laravel-dev-environment-with-docker-45cj"
+        },
+        {
+            "title": "The satisfaction in treating your side projects like bonsai",
+            "description": "I'm a serial starter. If half-finished projects were dollars, I'd be a millionaire. A little over a year ago I wrote an article about overcoming my issues finishing things that I started, but in the end that lead to a new, unforeseen problem: maintaining what I launch.",
+            "link": "https://dev.to/aschmelyun/the-satisfaction-in-treating-your-side-projects-like-bonsai-52cp"
+        },
+        {
+            "title": "How to use Laravel's bind and singleton methods",
+            "description": "A while back, someone pointed out that in my Laravel package tutorial, my use of a singleton method was completely unnecessary. Truth be told, up until this point I really hadn't looked into or thought about the bind or singleton methods that I've seen in the source code of other packages.",
+            "link": "https://dev.to/aschmelyun/how-to-use-laravel-s-bind-and-singleton-methods-3e58"
+        },
+        {
+            "title": "Four ways to pass data from Laravel to Vue",
+            "description": "I've been working on projects that use both Vue and Laravel for the last two to three years, and during the start of each's development I have to ask myself “How am I going to pass my data from Laravel to Vue?”.",
+            "link": ""
+        },
+        {
+            "title": "Adding real-time updates to your Laravel and Vue apps with laravel-websockets",
+            "description": "Earlier this month I launched listpal.co, a to-do app that included websockets functionality so that each user with the list open would see updates from everyone else. It was definitely a learning experience and my first time really diving into the world of Vue + websockets combined.",
+            "link": "https://dev.to/aschmelyun/adding-real-time-updates-to-your-laravel-and-vue-apps-with-laravel-websockets-3ac2"
+        },
+        {
+            "title": "So you want to get started with AR.js",
+            "description": "Augmented Reality seems like it's everywhere in 2018. Between Snapchat filters, Google stickers, IKEA's furniture preview, and now Shopify's AR Quick Look feature, putting 3D objects in the physical world seems to be more desirable than ever.",
+            "link": "https://dev.to/aschmelyun/so-you-want-to-get-started-with-ar-js-22e2"
+        },
+        {
+            "title": "The beauty of Docker for local Laravel development",
+            "description": "Want to take the fast track and skip the detailed tutorial below? Install Docker for your OS, clone this repo, add your Laravel app files to the src directory, and from the root project directory you just cloned run: docker-compose build && docker-compose up -d.",
+            "link": "https://dev.to/aschmelyun/the-beauty-of-docker-for-local-laravel-development-13c0"
+        }
+    ]
+}
