@@ -5,6 +5,11 @@
     "description": "A small selection of recently-published tutorials, demos, and other articles on web development from Andrew Schmelyun.",
     "articles": [
         {
+            "title": "I built a static site generator to help during COVID-19",
+            "description": "A few months ago, I published an article about a static site generator I made called Cleaver. Before this weekend, I mainly was just letting it sit idle. Fixing a few issues that sprung up, figuring out what features I should be adding to it, et cetera.",
+            "link": "https://dev.to/aschmelyun/i-built-a-static-site-generator-to-help-during-covid-19-1gn6"
+        },
+        {
             "title": "Getting started with Amazon S3 storage in Laravel",
             "description": "I've worked in the past on a few projects that use Amazon's S3 service to store images and files from Laravel applications. Even though the functionality is pretty much built into the framework, the process of getting started can be a little jarring, especially to those who don't have a whole lot of experience with the AWS suite.",
             "link": "https://dev.to/aschmelyun/getting-started-with-amazon-s3-storage-in-laravel-5b6d"
