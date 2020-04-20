@@ -1,7 +1,7 @@
 {
     "view": "pages.projects",
     "path": "/projects",
-    "title": "Andrew Schmelyun's Projects",
+    "title": "Project - Andrew Schmelyun",
     "description": "All of the current and previously-developed open and closed-source apps, websites, and packages from Andrew Schmelyun.",
     "projects": [
         {

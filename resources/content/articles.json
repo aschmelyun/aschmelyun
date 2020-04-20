@@ -1,9 +1,14 @@
 {
     "view": "pages.articles",
     "path": "/articles",
-    "title": "Andrew Schmelyun's Articles",
+    "title": "Articles - Andrew Schmelyun",
     "description": "A small selection of recently-published tutorials, demos, and other articles on web development from Andrew Schmelyun.",
     "articles": [
+        {
+            "title": "My favorite Laravel helpers and how to use them",
+            "description": "As a full-stack PHP developer who works with Laravel on a day-to-day basis, I'm always looking for shortcuts and helpful methods in the framework that I can use to cut down on development time or code complexity.",
+            "link": "https://dev.to/aschmelyun/my-favorite-laravel-helpers-and-how-to-use-them-28ij"
+        },
         {
             "title": "I built a static site generator to help during COVID-19",
             "description": "A few months ago, I published an article about a static site generator I made called Cleaver. Before this weekend, I mainly was just letting it sit idle. Fixing a few issues that sprung up, figuring out what features I should be adding to it, et cetera.",
@@ -32,7 +37,7 @@
         {
             "title": "Four ways to pass data from Laravel to Vue",
             "description": "I've been working on projects that use both Vue and Laravel for the last two to three years, and during the start of each's development I have to ask myself “How am I going to pass my data from Laravel to Vue?”.",
-            "link": ""
+            "link": "https://dev.to/aschmelyun/four-ways-to-pass-data-from-laravel-to-vue-5d8m"
         },
         {
             "title": "Adding real-time updates to your Laravel and Vue apps with laravel-websockets",

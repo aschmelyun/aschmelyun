@@ -1,0 +1,92 @@
+{
+    "view": "pages.uses",
+    "path": "/uses",
+    "title": "Uses - Andrew Schmelyun",
+    "description": "My preferred hardware and software that I use for web development, general programming, and video recording.",
+    "sections": [
+        {
+            "title": "Hardware + Accessories",
+            "items": [
+                {
+                    "name": "2018 MacBook Pro 15 Inch",
+                    "description": "This is the main machine that I do all of my work on. It has the touchbar, it's pretty awful when I hit the Siri button at least a few times a week. I went from developing on Windows, to Linux, and then to a Mac a few years ago, and I honestly don't think I could go back."
+                },
+                {
+                    "name": "HP 27f LED Monitor",
+                    "link": "https://www.bestbuy.com/site/hp-27f-27-ips-led-fhd-freesync-monitor-natural-silver/6219205.p?skuId=6219205",
+                    "description": "The external monitor I use on a daily basis. I have this set up next to my MacBook, but the bulk of my work is done on this screen. It's standard HD, but the large real estate gives me plenty of room to move apps around in."
+                },
+                {
+                    "name": "Cooler Master MasterKeys S TKL MX Blue",
+                    "link": "https://www.amazon.com/Cooler-Master-MasterKeys-Tenkeyless-Mechanical/dp/B072FQS2YF",
+                    "description": "I always wanted a mechanical keyboard, and it's one of the best investments I've ever made. I like the tenkeyless layout, it's compact but I still have arrow and home keys. The Cherry MX Blue switches give a great light, clicky feedback (but be warned, it is pretty loud)."
+                },
+                {
+                    "name": "Sennheiser HD 558",
+                    "link": "https://www.amazon.com/Sennheiser-HD-558-Headphones/dp/B004FEEY9A",
+                    "description": "These headphones have incredible quality. I've used them pretty much daily for almost 3 years, and you couldn't even tell. The sound quality is fantastic, although I'm looking to get something wireless soon."
+                },
+                {
+                    "name": "Realspace Magellan 60 Inch Standing Desk",
+                    "link": "https://www.officedepot.com/a/products/787781/Realspace-Magellan-60-W-Pneumatic-Height/",
+                    "description": "After I started working fully from home, I really wanted a standing desk that was easy to move up and down but didn't break the bank. This one fit all of those qualifications, and it's incredibly sturdy."
+                },
+                {
+                    "name": "Blue Snowball",
+                    "link": "https://www.bluedesigns.com/products/snowball/",
+                    "description": "The microphone that I use to record all of my videos, live streams, and anything else audio-related. It's currently supported by a boom arm I got off Amazon, which is attached to the side of my desk."
+                },
+                {
+                    "name": "Monoprice MP Select Mini V2",
+                    "link": "https://www.monoprice.com/product?p_id=21711",
+                    "description": "In my free time I work on a lot of small electronics projects, like weather monitors and home automation using Raspberry Pis. Being able to print out my own customizable cases and specific small parts is both useful and super fun."
+                }
+            ]
+        },
+        {
+            "title": "Software + Apps",
+            "items": [
+                {
+                    "name": "PHPStorm",
+                    "link": "https://www.jetbrains.com/phpstorm/",
+                    "description": "Hands-down the best IDE if you do work with Laravel, WordPress, or PHP in general. I've used VS Code successfully in the past for PHP development, but it just never come close enough. Startup time might be a bit slower, but it's a trade-off for the deep integrations available in large or complex projects."
+                },
+                {
+                    "name": "Material Theme UI",
+                    "link": "https://plugins.jetbrains.com/plugin/8006-material-theme-ui",
+                    "description": "This is the theme plugin I use for PHPStorm. It adds gorgeous icons to the sidebar and provides a huge amount of color options and customizations. I personally use the Atom One Dark theme with #F50057 as the highlight color. My font of choice in IDEs is Fira Code with ligatures turned on."
+                },
+                {
+                    "name": "OBS",
+                    "link": "https://obsproject.com/",
+                    "description": "I use OBS to record all of my streams and videos. The settings I use are pretty standard, although I have the FPS bumped up to 60 and I use a full color palette to avoid wash-out."
+                },
+                {
+                    "name": "iMovie",
+                    "link": "https://www.apple.com/imovie/",
+                    "description": "All of my videos are edited in iMovie. I've tried a few different premium and open-source solutions throughout the years, but I enjoy the mix of flexibility and simplicity that iMovie offers."
+                },
+                {
+                    "name": "Audacity",
+                    "link": "https://www.audacityteam.org/",
+                    "description": "Audio for my streams and video tutorials is all recorded, edited, and adjusted in Audacity before being imported to iMovie. I follow a procedure from thisinterestsme.com when it comes to sound editing to remove echos and sound artifacts while optimizing the audio from the Snowball mic."
+                },
+                {
+                    "name": "Brave Browser",
+                    "link": "https://brave.com/ero322",
+                    "description": "A privacy-oriented browser with a built-in ad block that also rewards users with cryptocurrency called BAT. Because it's built on Chromium, all Chrome extensions are compatible and the native Chrome devtools are present."
+                },
+                {
+                    "name": "iTerm",
+                    "link": "https://www.iterm2.com/",
+                    "description": "If you're looking for an incredibly feature-rich terminal replacement for MacOS, you need to check out iTerm. I use its split-screen function in almost every project, and combined with oh-my-zsh it's a gorgeous experience all around."
+                },
+                {
+                    "name": "Table Plus",
+                    "link": "https://tableplus.com/",
+                    "description": "My absolute favorite database app for MacOS, Table Plus has the unique feature of waiting until you press Cmd+S before any changes to a table or column are sent to the actual database. Be wary, large SQL imports can be slow, but it's the only con I've experienced so far."
+                }
+            ]
+        }
+    ]
+}
