@@ -5,6 +5,16 @@
     "description": "A small selection of recently-published tutorials, demos, and other articles on web development from Andrew Schmelyun.",
     "articles": [
         {
+            "title": "Authenticating a Vue SPA is easy with Laravel Sanctum",
+            "description": "Released earlier this year, Laravel Sanctum (formerly Laravel Airlock), is a lightweight package to help make authentication in single-page or native mobile applications as easy as possible.",
+            "link": "https://dev.to/aschmelyun/authenticating-a-vue-spa-is-easy-with-laravel-sanctum-392a"
+        },
+        {
+            "title": "5 tips for supercharged Laravel Eloquent queries",
+            "description": "I've been working with Laravel for the last five years or so, and over that time I've come across a few cases where I needed a unique or atypical way of returning a piece of data from my application.",
+            "link": "https://dev.to/aschmelyun/5-tips-for-supercharged-laravel-eloquent-queries-4pf2"
+        },
+        {
             "title": "My favorite Laravel helpers and how to use them",
             "description": "As a full-stack PHP developer who works with Laravel on a day-to-day basis, I'm always looking for shortcuts and helpful methods in the framework that I can use to cut down on development time or code complexity.",
             "link": "https://dev.to/aschmelyun/my-favorite-laravel-helpers-and-how-to-use-them-28ij"
