@@ -5,6 +5,16 @@
     "description": "A small selection of recently-published tutorials, demos, and other articles on web development from Andrew Schmelyun.",
     "articles": [
         {
+            "title": "Using the magic of mkcert to enable valid https on local dev sites",
+            "description": "Google Chrome (and most modern browsers), have taken a large stance against unencrypted http sites. This includes dev sites and those that use development TLDs like .test and .devlocal.",
+            "link": "https://dev.to/aschmelyun/using-the-magic-of-mkcert-to-enable-valid-https-on-local-dev-sites-3a3c"
+        },
+        {
+            "title": "Building an interactive Raspberry Pi dashboard with Laravel, Grafana, and Docker",
+            "description": "I've been monitoring the temperature and humidity on my back porch for over a year using a Raspberry Pi Zero and a DHT22 sensor, pushing the data every minute to a more powerful Raspberry Pi 3 Model B in my living room.",
+            "link": "https://dev.to/aschmelyun/building-an-interactive-raspberry-pi-dashboard-with-laravel-grafana-and-docker-12lj"
+        },
+        {
             "title": "Authenticating a Vue SPA is easy with Laravel Sanctum",
             "description": "Released earlier this year, Laravel Sanctum (formerly Laravel Airlock), is a lightweight package to help make authentication in single-page or native mobile applications as easy as possible.",
             "link": "https://dev.to/aschmelyun/authenticating-a-vue-spa-is-easy-with-laravel-sanctum-392a"
