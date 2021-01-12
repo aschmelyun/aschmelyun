@@ -7,14 +7,19 @@ use Philo\Blade\Blade;
 class BladeEngine
 {
 
-    public $viewsDir = __DIR__ . '/../../resources/views';
-    public $cacheDir = __DIR__ . '/../../cache';
+    public $viewsDir;
+    public $cacheDir;
 
     private $blade;
     private $data;
 
-    public function __construct()
+    public function __construct(?string $basePath = null)
     {
+        $basePath = $basePath ? $basePath : dirname(__FILE__, 3);
+
+        $this->viewsDir = $basePath . '/resources/views';
+        $this->cacheDir = $basePath . '/cache';
+
         if(!is_dir($this->cacheDir)) {
             mkdir($this->cacheDir, 0755);
         }
@@ -37,6 +42,11 @@ class BladeEngine
 
     public function save(string $html): bool
     {
+        if (isset($this->data->path)) {
+            return FileEngine::store($html, $this->data->path);
+        }
+
+
         return FileEngine::store($html, $this->data->path);
     }
 

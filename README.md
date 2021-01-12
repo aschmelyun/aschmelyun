@@ -12,8 +12,8 @@ composer create-project aschmelyun/cleaver your-site-name
 ```
 
 ## Requirements
-- PHP 7.1 or higher
-- Fairly recent version of node + npm 
+- PHP 7.2.5 or higher
+- Fairly recent versions of node + npm 
 
 ## Installation
 
@@ -39,7 +39,13 @@ There's a bootstrapped JavaScript file that imports lodash, jQuery, and Vue depe
 
 To compile the SCSS/JS assets and build the static site files, you can run `npm run dev` from the root. Additionally, using `npm run watch` starts up a local node server that you can use to view your compiled project, and will watch the entire `resources/` directory for changes to any assets, views, or content files.
 
-If you would like to build your site without compiling the assets, run the `php cleaver` command from the project root.
+If you would like to build your site without compiling the assets, run the `php cleaver build` command from the project root.
+
+## Commands and arguments
+
+If you build the site by calling `php cleaver build` directly, here's a list of the current commands and accompanying arguments you can use:
+
+- `php cleaver build {page}` builds the current site, rendering your content in the `resources/content` directory and outputting HTML organized in a directory tree to `/dist`. You can choose to render a single page or just a specific path in your content by including a `page` argument. (e.g. `php cleaver build posts/my-cool-post.md`)
 
 ## Publishing your site
 
@@ -56,10 +62,12 @@ You can then publish your entire project to a host of your choice as long as the
 ## Roadmap
 Cleaver is still very much in development, and while it's designed to remain as simple as possible there's a few features that could make for a better overall experience. Here's what's on the path ahead:
 
-- [ ] Ability to use folders in content directory
-- [ ] Ability to add in and use HTML in JSON content files
+- [x] Ability to use folders in content directory
+- [x] Add collection containing all content into each view
+- [x] A better cli interface and style during site builds
+- [x] Ability to add in and use HTML in JSON content files
 - [ ] More detailed build errors if something goes wrong
-- [ ] A better cli interface and style during site builds
+- [ ] Create and import site scaffolds from the command line
 
 ## Contact Info
 
