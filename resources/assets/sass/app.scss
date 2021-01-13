@@ -46,3 +46,32 @@
     z-index: -1;
   }
 }
+.blog-content {
+
+  h2 {
+    @apply text-2xl mb-2 mt-8 text-gray-900 font-medium;
+  }
+  p {
+    @apply leading-relaxed mb-4;
+
+    a {
+      @apply text-gray-900 underline transition-colors duration-200;
+    }
+  }
+  blockquote {
+    @apply py-2 px-4 mb-4 mx-6 italic border-4 border-r-0 border-t-0 border-b-0 border-gray-200;
+
+    p {
+      margin: 0;
+    }
+  }
+  pre {
+    @apply font-mono;
+  }
+  code {
+    @apply font-mono text-gray-900 bg-gray-200 rounded py-1 px-2;
+  }
+  ul {
+    @apply py-2 px-4 mb-4 mx-6;
+  }
+}

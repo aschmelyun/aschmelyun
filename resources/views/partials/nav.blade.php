@@ -1,6 +1,6 @@
 <header class="text-gray-900 font-semibold">
     <div class="container mx-auto flex flex-wrap py-4 flex-col md:flex-row items-center">
-        <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+        <a href="/" class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
             <img src="/assets/images/andrew-schmelyun-profile.jpg" alt="Andrew Schmelyun profile picture" class="w-24 h-24 rounded-full">
         </a>
         <nav class="md:ml-auto flex flex-wrap items-center text-lg justify-center">

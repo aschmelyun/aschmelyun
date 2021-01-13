@@ -5,8 +5,7 @@
 <div class="container mx-auto pb-6 md:pb-12 antialiased">
     <div class="w-4/5 mx-auto">
         @include('partials.nav')
-        @include('partials.home.intro')
-        @include('partials.home.articles')
+        @include('partials.blog.content')
     </div>
 </div>
 @include('partials.footer')
