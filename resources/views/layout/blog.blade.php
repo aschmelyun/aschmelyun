@@ -14,8 +14,8 @@
         @foreach($posts as $post)
             @include('partials.blog.preview', ['post' => $post])
         @endforeach
+        @include('partials.footer')
     </div>
 </div>
-@include('partials.footer')
 </body>
 </html>
