@@ -1,0 +1,6 @@
+{
+    "view": "layout.blog",
+    "path": "/blog",
+    "title": "Blog",
+    "description": "A full-stack PHP developer with a love for Laravel, Vue, and Docker."
+}

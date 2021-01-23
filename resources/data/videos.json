@@ -1,0 +1,97 @@
+[
+  {
+    "name": "Securing a Laravel API in 20 minutes with JWTs",
+    "id": "6eX9Pj-GhZs",
+    "published": "Dec 9 2018"
+  },
+  {
+    "name": "How to develop a simple Laravel package locally",
+    "id": "Hr8Zc2Zkcjg",
+    "published": "Oct 14 2019"
+  },
+  {
+    "name": "Create a local Laravel dev environment with Docker",
+    "id": "5N6gTVCG_rw",
+    "published": "Oct 29 2019"
+  },
+  {
+    "name": "How to use Laravel's bind and singleton methods",
+    "id": "yg1qOom6YuE",
+    "published": "Nov 25 2019"
+  },
+  {
+    "name": "Viewing a Docker MySQL database with PHPMyAdmin and Sequel Pro",
+    "id": "ozKxWsojYJ4",
+    "published": "Dec 17 2019"
+  },
+  {
+    "name": "Adding social logins with Laravel Socialite",
+    "id": "FLsSEV5ulD4",
+    "published": "Jan 14 2020"
+  },
+  {
+    "name": "A much better local Laravel dev environment with Docker",
+    "id": "I980aPL-NRM",
+    "published": "Feb 13 2020"
+  },
+  {
+    "name": "Getting started with Amazon S3 storage in Laravel",
+    "id": "BQ0gi9YHuek",
+    "published": "Mar 5 2020"
+  },
+  {
+    "name": "Adding geolocation and Google Maps to Vue applications",
+    "id": "KARBEHUyooM",
+    "published": "Apr 5 2020"
+  },
+  {
+    "name": "Running multiple Laravel apps locally with Docker",
+    "id": "LFrBmvgamGI",
+    "published": "Apr 15 2020"
+  },
+  {
+    "name": "Authentication in Vue using Laravel Sanctum",
+    "id": "eeMtmkDZ72Q",
+    "published": "May 6 2020"
+  },
+  {
+    "name": "Easily deploy a Laravel application with Docker",
+    "id": "G5Nk4VykcUw",
+    "published": "May 20 2020"
+  },
+  {
+    "name": "5 tips for supercharged Laravel Eloquent queries",
+    "id": "TuPdEbEBvo0",
+    "published": "Jul 2 2020"
+  },
+  {
+    "name": "Populating a Google Map with Vue and Laravel",
+    "id": "FkibP9Wnreo",
+    "published": "Jul 14 2020"
+  },
+  {
+    "name": "Let's build with Laravel: A Linktree clone",
+    "id": "30qk04BG9G4",
+    "published": "Aug 25 2020"
+  },
+  {
+    "name": "Running scheduled Laravel tasks with Docker",
+    "id": "2UTHJpBRGpY",
+    "published": "Sep 7 2020"
+  },
+  {
+    "name": "Organizing data with Laravel collections",
+    "id": "a2QvlLs0uEk",
+    "published": "Oct 12 2020"
+  },
+  {
+    "name": "Build a Vue shopping cart with Laravel Cashier and Stripe",
+    "id": "gvnxd1xne7Q",
+    "published": "Dec 30 2020"
+  },
+  {
+    "name": "Getting started with Laravel Breeze and Jetstream",
+    "id": "p_ZYVObwBXQ",
+    "published": "Jan 19 2021"
+  }
+]

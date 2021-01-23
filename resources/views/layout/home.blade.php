@@ -7,8 +7,9 @@
         @include('partials.nav')
         @include('partials.home.intro')
         @include('partials.home.articles')
+        @include('partials.home.videos')
+        @include('partials.footer')
     </div>
 </div>
-@include('partials.footer')
 </body>
 </html>
