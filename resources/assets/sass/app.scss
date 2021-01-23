@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import '~highlight.js/scss/atom-one-light';
 
 .lang {
   display: inline-block;
@@ -65,14 +66,11 @@
       margin: 0;
     }
   }
-  pre {
-    @apply font-mono;
-  }
-  code {
-    @apply font-mono text-gray-900 bg-gray-200 rounded py-1 px-2;
-  }
   ul {
     @apply py-2 px-4 mb-4 mx-6;
+  }
+  pre > code {
+    @apply rounded mb-4;
   }
 }
 .tag-laravel {

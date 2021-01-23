@@ -6,8 +6,8 @@
     <div class="w-4/5 mx-auto">
         @include('partials.nav')
         @include('partials.blog.content')
+        @include('partials.footer')
     </div>
 </div>
-@include('partials.footer')
 </body>
 </html>
