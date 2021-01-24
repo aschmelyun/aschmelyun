@@ -9,6 +9,8 @@
         @php
             $posts = $cleaver->filter(function($post, $key) {
                 return $post->view === 'layout.post';
+            })->sortByDesc(function($post, $key) {
+                return strtotime($post->published);
             });
         @endphp
         @foreach($posts as $post)
