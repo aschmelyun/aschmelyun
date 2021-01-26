@@ -59,6 +59,9 @@
       @apply text-gray-900 underline transition-colors duration-200;
     }
   }
+  img {
+    max-width: 100%;
+  }
   blockquote {
     @apply py-2 px-4 mb-4 mx-6 italic border-4 border-r-0 border-t-0 border-b-0 border-gray-200;
 

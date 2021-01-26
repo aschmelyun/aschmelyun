@@ -3,9 +3,9 @@
 @include('partials.head')
 <body class="{{ $bodyClasses ?? '' }}">
 <div class="container mx-auto pb-6 md:pb-12 antialiased">
-    <div class="w-4/5 mx-auto">
+    <div class="w-auto mx-4 lg:w-4/5 lg:mx-auto">
         @include('partials.nav')
-        <h1 class="mt-8 mb-12 text-4xl text-gray-900 font-medium section-heading relative"><span class="bg-white pr-3">All videos</span></h1>
+        <h1 class="mt-8 mb-8 lg:mb-12 text-3xl lg:text-4xl text-gray-900 font-medium section-heading relative"><span class="bg-white pr-3">All videos</span></h1>
         @php
             $videos = collect($videos)->sortByDesc(function($video, $index) {
                 return strtotime($video->published);
@@ -13,7 +13,7 @@
         @endphp
         @foreach($videos as $video)
         <div class="flex flex-wrap -mx-4 mb-8 border-b-2 border-gray-100">
-            <div class="sm:w-2/5 mb-8 px-4">
+            <div class="sm:w-2/5 mb-4 lg:mb-8 px-4">
                 <a href="https://youtube.com/watch?v={{ $video->id }}" target="_blank" rel="nofollow">
                     <img class="hover:opacity-75 transition-opacity duration-200" src="https://img.youtube.com/vi/{{ $video->id }}/maxresdefault.jpg">
                 </a>
