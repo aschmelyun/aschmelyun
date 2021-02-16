@@ -5,7 +5,7 @@
                 <span class="inline-block py-0.5 px-2 mr-1 rounded bg-white text-gray-600 border border-gray-600 text-xs font-medium tracking-widest tag-{{ strtolower(trim($category)) }}">{{ strtoupper(trim($category)) }}</span>
             @endforeach
         </div>
-        <h2 class="text-2xl title-font font-medium text-gray-900 my-2">{{ $post->title }}</h2>
+        <h2 class="text-2xl title-font font-medium text-gray-900 my-2"><a href="{{ $post->path }}" class="inline-block hover:underline">{{ $post->title }}</a></h2>
         <p class="leading-relaxed mb-4">{!! $post->excerpt !!}</p>
         <div class="flex items-center flex-wrap pb-8 mb-8 border-b-2 border-gray-100 mt-auto w-full">
             <a href="{{ $post->path }}" class="text-gray-900 inline-flex items-center hover:underline">Read More

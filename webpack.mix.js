@@ -4,10 +4,28 @@ let mix = require('laravel-mix'),
 
 require('mix-tailwindcss');
 
+let ImageminPlugin = require('imagemin-webpack-plugin').default;
+let CopyWebpackPlugin = require('copy-webpack-plugin');
+let ImageminMozJpeg = require('imagemin-mozjpeg');
+
 mix.disableNotifications();
 mix.webpackConfig({
     plugins: [
-        build.cleaver
+        build.cleaver,
+        new CopyWebpackPlugin({
+            patterns: [
+                { from: 'resources/assets/images', to: 'dist/assets/images' },
+            ],
+        }),
+        new ImageminPlugin({
+            test: /\.(jpe?g|png|gif|svg)$/i,
+            plugins: [
+                ImageminMozJpeg({
+                    quality: 80,
+                    progressive: true
+                })
+            ]
+        })
     ],
     devServer: {
         contentBase: path.join(__dirname, 'dist')
@@ -17,7 +35,6 @@ mix.webpackConfig({
 mix.setPublicPath('./')
    .js('resources/assets/js/app.js', 'dist/assets/js')
    .sass('resources/assets/sass/app.scss', 'dist/assets/css')
-   .copy('resources/assets/images/', 'dist/assets/images')
    .options({
        processCssUrls: false
    })

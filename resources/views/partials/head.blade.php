@@ -14,13 +14,22 @@
     <meta property="og:description" content="{{ $description ?? '' }}" />
     <meta property="og:url" content="https://aschmelyun.com/" />
     <meta property="og:site_name" content="Andrew Schmelyun" />
-    <meta property="og:image" content="https://aschmelyun.com/assets/images/meta{{ $path === '/' ? '/index' : $path }}.jpg" />
+    @if($path !== '/' && file_exists(dirname(__FILE__, 2) . '/resources/assets/images/meta' . $path . '.jpg'))
+        <meta name="og:image" content="https://aschmelyun.com/assets/images/meta{{ $path }}.jpg" />
+    @else
+        <meta property="og:image" content="https://aschmelyun.com/assets/images/meta/default.jpg" />
+    @endif
 
-    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:description" content="{{ $description ?? '' }}" />
     <meta name="twitter:title" content="{{ $title }}" />
     <meta name="twitter:site" content="@aschmelyun" />
-    <meta name="twitter:image" content="https://aschmelyun.com/assets/images/meta{{ $path === '/' ? '/index' : $path }}.jpg" />
+    @if($path !== '/' && file_exists(dirname(__FILE__, 2) . '/resources/assets/images/meta' . $path . '.jpg'))
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://aschmelyun.com/assets/images/meta{{ $path }}.jpg" />
+    @else
+        <meta name="twitter:card" content="summary" />
+        <meta property="twitter:image" content="https://aschmelyun.com/assets/images/meta/default.jpg" />
+    @endif
 
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32x32.png">
