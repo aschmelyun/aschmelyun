@@ -14,5 +14,5 @@ I also publish a **[newsletter](https://aschmelyun.substack.com)** called *The V
 
 [![Sponsor Me](https://img.shields.io/static/v1?label=Sponsor%20aschmelyun&message=%E2%9D%A4&logo=GitHub)](https://github.com/sponsors/aschmelyun)
 
-[![Andrew's GitHub stats](https://github-readme-stats.vercel.app/api?username=aschmelyun&hide=contribs&count_private=true&theme=dracula&show_icons=true)](https://github.com/anuraghazra/github-readme-stats)
-[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=aschmelyun&count_private=true&theme=dracula&show_icons=true&hide=css&layout=compact)](https://github.com/anuraghazra/github-readme-stats)
+[![Andrew Schmelyun's GitHub stats](https://github-readme-stats.vercel.app/api?username=aschmelyun&hide=contribs&count_private=true&theme=dracula)](https://github.com/anuraghazra/github-readme-stats)
+[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=aschmelyun&count_private=true&theme=dracula&show_icons=true&hide=css&layout=compact&card_width=340)](https://github.com/anuraghazra/github-readme-stats)
