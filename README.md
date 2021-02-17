@@ -19,5 +19,5 @@ I also publish a **[newsletter](https://aschmelyun.substack.com)** called *The V
 </a>
 
 <a href="https://github.com/anuraghazra/github-readme-stats">
-  <img align="center" src="https://github-readme-stats.vercel.app/api/top-langs/?username=aschmelyun&count_private=true&theme=dracula&show_icons=true&hide=css&layout=compact&card_width=320" alt="Andrew Schmelyun's Most Used GitHub Languages" />
+  <img align="center" src="https://github-readme-stats.vercel.app/api/top-langs/?username=aschmelyun&count_private=true&theme=dracula&show_icons=true&hide=css&layout=compact&card_width=290" alt="Andrew Schmelyun's Most Used GitHub Languages" />
 </a>
