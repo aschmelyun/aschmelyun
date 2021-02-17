@@ -14,7 +14,7 @@
                     </a>
                 </div>
                 <div class="sm:w-3/5 mb-8 px-4">
-                    <h2 class="text-2xl title-font font-medium text-gray-900 my-2"><a href="{{ $project->link }}" class="inline-block hover:underline">{{ $project->name }}</a></h2>
+                    <h2 class="text-2xl title-font font-medium text-gray-900 my-2"><a href="{{ $project->link }}" class="inline-block hover:underline" target="_blank" rel="noreferrer">{{ $project->name }}</a></h2>
                     <p class="text-gray-600 leading-relaxed mb-4">{{ $project->description }}</p>
                     <a href="{{ $project->link }}" target="_blank" rel="noreferrer" class="text-gray-900 inline-flex items-center hover:underline">Check It Out
                         <svg class="w-4 h-4 ml-1" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
