@@ -10,7 +10,7 @@
 
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="{{ $title }}" />
+    <meta property="og:title" content="{{ $meta_title ?? $title }}" />
     <meta property="og:description" content="{{ $description ?? '' }}" />
     <meta property="og:url" content="https://aschmelyun.com/" />
     <meta property="og:site_name" content="Andrew Schmelyun" />
@@ -21,7 +21,7 @@
     @endif
 
     <meta name="twitter:description" content="{{ $description ?? '' }}" />
-    <meta name="twitter:title" content="{{ $title }}" />
+    <meta name="twitter:title" content="{{ $meta_title ?? $title }}" />
     <meta name="twitter:site" content="@aschmelyun" />
     @if($path !== '/' && file_exists(dirname(__FILE__, 2) . '/resources/assets/images/meta' . $path . '.jpg'))
         <meta name="twitter:card" content="summary_large_image" />

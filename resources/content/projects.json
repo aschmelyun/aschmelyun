@@ -2,6 +2,7 @@
   "view": "layout.projects",
   "path": "/projects",
   "title": "Projects",
+  "meta_title": "Andrew Schmelyun's Projects",
   "description": "A full-stack PHP developer with a love for Laravel, Vue, and Docker.",
   "projects": [
     {
