@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <title>Authenticating a Vue SPA is easy with Laravel Sanctum - Andrew Schmelyun</title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Laravel Sanctum is a featherweight package for authenticating Vue, React, and native mobile applications to a Laravel backend.">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Authenticating a Vue SPA is easy with Laravel Sanctum" />
+    <meta property="og:description" content="Laravel Sanctum is a featherweight package for authenticating Vue, React, and native mobile applications to a Laravel backend." />
+    <meta property="og:url" content="https://aschmelyun.com/" />
+    <meta property="og:site_name" content="Andrew Schmelyun" />
+            <meta name="og:image" content="https://aschmelyun.com/assets/images/meta/blog/authenticating-a-vue-spa-is-easy-with-laravel-sanctum.jpg" />
+    
+    <meta name="twitter:description" content="Laravel Sanctum is a featherweight package for authenticating Vue, React, and native mobile applications to a Laravel backend." />
+    <meta name="twitter:title" content="Authenticating a Vue SPA is easy with Laravel Sanctum" />
+    <meta name="twitter:site" content="@aschmelyun" />
+            <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://aschmelyun.com/assets/images/meta/blog/authenticating-a-vue-spa-is-easy-with-laravel-sanctum.jpg" />
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
+    <meta name="theme-color" content="#1a202c">
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/app.css?id=904aebe536c8fe3f1747">
+</head><body class="">
+<div class="container mx-auto pb-6 md:pb-12 antialiased">
+    <div class="w-auto mx-4 lg:w-4/5 lg:mx-auto">
+        <header class="text-gray-900 font-semibold">
+    <div class="container mx-auto flex flex-wrap py-4 flex-col md:flex-row items-center">
+        <a href="/" id="link-home" class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0 hover:opacity-75 transition-opacity duration-200">
+            <img src="/assets/images/andrew-schmelyun-profile.jpg" alt="Andrew Schmelyun profile picture" class="w-24 h-24 rounded-full">
+        </a>
+        <nav class="w-full md:w-auto md:ml-auto flex flex-wrap items-center text-lg justify-around lg:justify-center">
+            <a href="/blog" class="inline-flex bg-white text-gray-900 mr-0 lg:mr-6 hover:bg-gray-200 border-0 py-1 px-3 focus:outline-none transition-colors duration-200">Blog</a>
+            <a href="/videos" class="inline-flex bg-white text-gray-900 mr-0 lg:mr-6 hover:bg-gray-200 border-0 py-1 px-3 focus:outline-none transition-colors duration-200">Videos</a>
+            <a href="/uses" class="inline-flex bg-white text-gray-900 mr-0 lg:mr-6 hover:bg-gray-200 border-0 py-1 px-3 focus:outline-none transition-colors duration-200">Uses</a>
+            <a href="/projects" class="inline-flex bg-white text-gray-900 mr-0 lg:mr-6 hover:bg-gray-200 border-0 py-1 px-3 focus:outline-none transition-colors duration-200">Projects</a>
+        </nav>
+        <a href="mailto:me@aschmelyun.com?subject=Hey Andrew" class="inline-flex items-center bg-gray-200 text-gray-900 border-0 py-1 px-3 focus:outline-none hover:bg-gray-900 hover:text-white font-semibold text-lg mt-4 md:mt-0 transition-colors duration-200">Get In Touch
+            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+                <path d="M5 12h14M12 5l7 7-7 7"></path>
+            </svg>
+        </a>
+    </div>
+</header>        <section class="text-gray-600 body-font overflow-hidden mt-4 lg:mt-16">
+    <h1 class="text-3xl lg:text-4xl text-gray-900 font-medium relative">Authenticating a Vue SPA is easy with Laravel Sanctum</h1>
+    <div class="pt-4 pb-12 w-full flex flex-col items-start">
+        <div class="mb-8 flex items-center">
+            <span class="inline-block mr-4 text-gray-900 font-medium">Published <time datetime="2020-05-11 00:00:00">May 11 2020</time></span>
+                            <span class="inline-block py-0.5 px-2 mr-2 rounded bg-white text-gray-600 border border-gray-600 text-xs font-medium tracking-widest tag-laravel">LARAVEL</span>
+                            <span class="inline-block py-0.5 px-2 mr-2 rounded bg-white text-gray-600 border border-gray-600 text-xs font-medium tracking-widest tag-vue">VUE</span>
+                    </div>
+        <div class="leading-relaxed blog-content w-full"><p>Released earlier this year, <a href="https://laravel.com/docs/7.x/sanctum">Laravel Sanctum</a> (formerly Laravel Airlock), is a lightweight package to help make authentication in single-page or native mobile applications as easy as possible. Where before you had to choose between using the web middleware with sessions or an external package like Tymon's jwt-auth, you can now use Sanctum to accomplish both stateful and token-based authentication.</p>
+<p>In this short walk-through, I'll show you how to get started with the former. We'll create a dummy API, authenticate a user from a Vue component, and get data associated with that signed-in user.</p>
+<p>If you'd like to skip the written tutorial, you can check out <a href="https://www.youtube.com/watch?v=eeMtmkDZ72Q">this video</a> I've made instead. You can also go directly to the finished source code, available in <a href="https://github.com/aschmelyun/video-auth-vue-laravel-sanctum">this repository</a> on GitHub.</p>
+<p>Alright, let's dive in!</p>
+<h2>Creating a test API</h2>
+<p>The first thing we'll need to do is create an API that we can get data from. I'm thinking of a super simplistic app that will retrieve a list of secrets associated with our user.</p>
+<p>I've installed an out-of-the-box Laravel app, and have it and a MySQL database set up in a local environment using my <a href="https://github.com/aschmelyun/docker-compose-laravel">Laravel Docker setup</a>. The first thing that I'm going to create is a model and migration for our secret. Using the command line, this is easy with artisan.</p>
+<pre><code class="language-bash">php artisan make:model Secret --migration</code></pre>
+<p>Let's open up that migration file and add in our data columns needed for a secret. I think all we'll need from this (aside from the default ID and timestamps that Laravel provides) is a user_id integer to form the relationship to a user, and the actual secret.</p>
+<pre><code class="language-php">Schema::create('secrets', function (Blueprint $table) {
+    $table-&gt;id();
+    $table-&gt;integer('user_id');
+    $table-&gt;text('secret');
+    $table-&gt;timestamps();
+});</code></pre>
+<p>Okay, running the migration will bring up our <code>users</code> and <code>secrets</code> tables:</p>
+<pre><code class="language-bash">php artisan migrate</code></pre>
+<p>A couple of quick modifications will need to be made to both of our app's models enabling the relationships, so let's open them up and get started:</p>
+<pre><code class="language-php">// User.php
+
+public function secrets()
+{
+    return $this-&gt;hasMany('App\Secret');
+}</code></pre>
+<pre><code class="language-php">// Secret.php
+
+public function user()
+{
+    return $this-&gt;belongsTo('App\Secret');
+}</code></pre>
+<p>The final piece of our API structure is the actual routes and controllers. We're only going to be accessing a single path, which will retrieve the secrets associated with our user. So, I've added the following to my app's <code>routes/api.php</code> file:</p>
+<pre><code class="language-php">Route::get('/secrets', 'SecretController@index');</code></pre>
+<p>The controller for this can be created easily using an Artisan command:</p>
+<pre><code class="language-bash">php artisan make:controller SecretController</code></pre>
+<p>Opening up that controller, let's create our index method and just return back all of our app's secrets for now. Since we have no way of getting an authenticated user, <strong>yet</strong>:</p>
+<pre><code class="language-php">public function index()
+{
+    return App\Secret::all();
+}</code></pre>
+<p>Our dummy API is done for now, let's create some fake users and secrets.</p>
+<h2>Populating the database</h2>
+<p>You can easily go right into the database and populate it manually, create a controller and form for users to input their own data, or use Artisan tinker to semi-automate user creation. I'm going to skip these methods and instead use the built-in Laravel factories to generate fake data for our users and secrets.</p>
+<p>Out of the box, Laravel comes with a <code>UserFactory.php</code> class, to generate dummy users. We're going to create one for our secrets as well. In your terminal, run the following Artisan command:</p>
+<pre><code class="language-bash">php artisan make:factory SecretFactory --model=Secret</code></pre>
+<p>Open up the generated file, and we're going to need to populate each model with just two data points. Our user_id, and a secret:</p>
+<pre><code class="language-php">$factory-&gt;define(Secret::class, function (Faker $faker) {
+    return [
+        'user_id' =&gt; 1,
+        'secret' =&gt; $faker-&gt;text
+    ];
+});</code></pre>
+<p>You might be wondering why we're hard-coding in our <code>user_id</code> in the above snippet. Instead of generating it randomly based on the amount of users, I want to have more control over it. I'll show you shortly how I can overwrite this when we start generating our secrets.</p>
+<p>Let's start by creating a couple of fake users. Open up your tinker shell by running the <code>php artisan tinker</code> command from your site root. Once it's open, we can create two users by running the global factory helper twice:</p>
+<pre><code class="language-php">factory(App\User::class)-&gt;create(); //create saves our user in the database, unlike make</code></pre>
+<p>Now that we have them generated, let's create our secrets. I'm going to run the following in the tinker shell twice to create two for <code>user_id 1</code>:</p>
+<pre><code class="language-php">factory(App\Secret::class)-&gt;create();</code></pre>
+<p>But what about our second user with a different id? Overwriting any of the values in our factory class is easy, all we do is pass in an override array to the <code>create()</code> method. So, we'll run the following twice to create two secrets for our second fake user:</p>
+<pre><code class="language-php">factory(App\Secret::class)-&gt;create(['user_id' =&gt; 2]);</code></pre>
+<p>Our database is populated with enough fake data, let's move on to installing and prepping the Laravel Sanctum package.</p>
+<h2>Installing Laravel Sanctum</h2>
+<p>Installation is a breeze, and can be accomplished by running a few commands in our terminal. First, let's actually install the package using Composer:</p>
+<pre><code class="language-bash">composer require laravel/sanctum</code></pre>
+<p>Then we'll have to publish the migration files (and run the migration) with the following commands:</p>
+<pre><code class="language-bash">php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
+php artisan migrate</code></pre>
+<p>The last part of Sanctum's installation requires us modifying the <code>app\Http\Kernel.php</code> file to include a middleware that will inject Laravel's session cookie into our app's frontend. This is what will ultimately enable us to pass and retrieve data as an authenticated user:</p>
+<pre><code class="language-php">'api' =&gt; [
+    EnsureFrontendRequestsAreStateful::class,
+    'throttle:60,1'
+]</code></pre>
+<p>Now, we can move onto our app's frontend!</p>
+<h2>Building the frontend</h2>
+<p>Starting with <strong>Laravel 7</strong>, the frontend and authentication boilerplates were stripped out of the main package and instead can be installed with a separate bundle. For the sake of this demonstration, we're going to use it and Vue to craft our frontend.</p>
+<p>Running the following commands from our app's root will help us get that set up:</p>
+<pre><code class="language-bash">composer require laravel/ui
+php artisan ui vue --auth
+npm install &amp;&amp; npm run dev</code></pre>
+<p>These commands do three things:</p>
+<ol>
+<li>
+<p>Install the Laravel UI package with Composer</p>
+</li>
+<li>
+<p>Generate the JS/UI files, auth boilerplate, and package.json modifications</p>
+</li>
+<li>
+<p>Install the frontend dependencies and compile development JS/CSS assets</p>
+</li>
+</ol>
+<p>I'm going to copy over everything in the <code>welcome.blade.php</code> file to an <code>app.blade.php</code> file. In it, I'll be stripping out the interior content and adding an <strong>id=&quot;app&quot;</strong> attribute to the outside div. This will be our Vue app's mount point, as detailed in the generated app.js file.</p>
+<p>Let's create our Vue component that will hold our login form and display some secrets.</p>
+<h2>Creating a Vue component</h2>
+<p>When we generated our frontend code earlier using <strong>php artisan ui vue</strong>, an example component was generated under <code>resources/js/components/ExampleComponent.vue</code>. Let's create a brand new component called <code>SecretComponent.vue</code>, with a basic data structure:</p>
+<pre><code class="language-vue">&lt;template&gt;
+
+&lt;/template&gt;
+&lt;script&gt;
+export default {
+    data() {
+        return {
+            secrets: [],
+            formData: {
+                email: '',
+                password: ''
+            }
+        }
+    }
+}
+&lt;/script&gt;</code></pre>
+<p>Our secrets are kept in an array, and we also have a formData object that will be used to store the email address and password for our login form.</p>
+<p>Speaking of which, let's get started building out the markup that will create that form. Expanding between the <code>&lt;template&gt;</code> tags a bit, we'll add two divs. One for the login form, which will be hidden when there's secrets available, and another for the list of secrets, which will be hidden <em>until</em> there's secrets.</p>
+<pre><code class="language-vue">&lt;template&gt;
+    &lt;div&gt;
+        &lt;div v-if="!secrets.length" class="row"&gt;
+            &lt;form action="#" @submit.prevent="handleLogin"&gt;
+                &lt;div class="form-row"&gt;
+                    &lt;input type="email" v-model="formData.email"&gt;
+                &lt;/div&gt;
+                &lt;div class="form-row"&gt;
+                    &lt;input type="password" v-model="formData.password"&gt;
+                &lt;/div&gt;
+                &lt;div class="form-row"&gt;
+                    &lt;button type="submit"&gt;Sign In&lt;/button&gt;
+                &lt;/div&gt;
+            &lt;/form&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/template&gt;</code></pre>
+<p>Now, we should have a good-looking sign-in form:</p>
+<p><img src="https://dev-to-uploads.s3.amazonaws.com/i/m9kz2vgr6s2p983upf9v.png" alt="Screenshot of a login form made with Bootstrap" /></p>
+<p>In the code above, we're excluding an action from the form, and instead using Vue's submit handler to take care of the form submission. Let's create the method called <code>handleLogin</code>, which will be fired whenever a user tries to sign in:</p>
+<pre><code class="language-vue">&lt;script&gt;
+export default {
+    data() {
+        return {
+            secrets: [],
+            formData: {
+                email: '',
+                password: ''
+            }
+        }
+    },
+    methods: {
+        handleLogin() {
+            // handle user login
+        }
+    }
+}
+&lt;/script&gt;</code></pre>
+<p>Finally, we can go into our <code>resources/js/app.js</code> file and register our new component:</p>
+<pre><code class="language-js">Vue.component('secret-component', require('./components/SecretComponent.vue).default);</code></pre>
+<p>Then going back into our <code>app.blade.php</code> file, replacing <strong><example-component></strong> with <strong><secret-component></strong>. Let's put that <code>handleLogin()</code> method to use and authenticate a user!</p>
+<h2>Authenticating a user</h2>
+<p>If we take a look at the <a href="https://laravel.com/docs/7.x/sanctum#spa-authentication">Laravel Sanctum documentation</a> for SPA authentication, it details that we first need to make a call to a route at <code>/sanctum/csrf-cookie</code>, which will set the CSRF protection on our app and enable POST requests uninterrupted.</p>
+<p>From there, we can proceed to send a request to the <code>/login</code> route, provided by the authentication framework we added in earlier. All we have to do is pass in our user's email and password, and it will authenticate our user if the credentials match.</p>
+<p>Let's try implementing that in our <code>handleLogin()</code> method from earlier:</p>
+<pre><code class="language-js">handleLogin() {
+    axios.get('/sanctum/csrf-cookie').then(response =&gt; {
+        axios.post('/login', this.formData).then(response =&gt; {
+            console.log('User signed in!');
+        }).catch(error =&gt; console.log(error)); // credentials didn't match
+    });
+}</code></pre>
+<p>Okay, if we save that and try to sign in with one of the dummy users in our database, everything should go through smoothly! The first request sets the CSRF protection in our frontend, and the second one sends over the formData object containing our user's email and password. No response data is sent back over, so we can just continue on using a Promise's resolve.</p>
+<p>What's there to do now? Well, let's get our user's secrets!</p>
+<h2>Retrieving user data</h2>
+<p>In our Vue component, let's create a new method called <code>getSecrets()</code>, which will make a call to our secrets API endpoint that we created earlier. If everything goes successfully, that call should return back an array of secrets, which we can use to replace the array in our component's data object.</p>
+<p>It will need to be called after our user has successfully logged in, so the flow will look something like this:</p>
+<pre><code class="language-vue">handleLogin() {
+    axios.get('/sanctum/csrf-cookie').then(response =&gt; {
+        axios.post('/login', this.formData).then(response =&gt; {
+            this.getSecrets();
+        }).catch(error =&gt; console.log(error)); // credentials didn't match
+    });
+},
+getSecrets() {
+    axios.get('/api/secrets').then(response =&gt; this.secrets = response.data);
+}</code></pre>
+<p>But wait, we're returning <strong>all</strong> of the app's secrets, remember? Not just the user's. We can change that with a single line though, thanks to Laravel Sanctum. Let's open up our SecretController and navigate to the <code>index()</code> method, making a few changes:</p>
+<pre><code class="language-php">public function index(Request $request)
+{
+    return $request-&gt;user()-&gt;secrets;
+}</code></pre>
+<p>Included in each API call (after we've successfully logged our user in), is a <code>laravel_session</code> cookie in the header of each request. Sanctum takes this cookie, and using the fact that our API endpoint is stateful due to the added-in middleware from earlier, and determines if a user is logged in.</p>
+<p>This user in its entirety, can be retrieved using the <code>$request</code> object. We can then chain the secrets relationship onto it, returning back the array of our user's secrets.</p>
+<p>Finally, let's add in some boilerplate markup to render out these secrets to our user:</p>
+<pre><code class="language-vue">&lt;template&gt;
+    &lt;div&gt;
+        &lt;div v-if="secrets.length" class="row"&gt;
+            &lt;div class="secret" v-for="(secret, index) in secrets" :key="index"&gt;
+                &lt;strong v-text="secret.secret"&gt;&lt;/strong&gt; - created at &lt;span v-text="secret.created_at"&gt;&lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/template&gt;</code></pre>
+<p>💥 Now if we refresh our app and sign in using our fake user's credentials, we'll see a list of our user's secrets displayed out for us:</p>
+<p><img src="https://dev-to-uploads.s3.amazonaws.com/i/kxufrlm58rvez6w5b93g.png" alt="Screenshot of generated text making up a secrets list" /></p>
+<p>So, now what's left?</p>
+<h2>Conclusions and next steps</h2>
+<p>I've only just scratched the surface of what this incredibly powerful and easy-to-use package offers. If you're using the techniques above to authenticate a user in an SPA, the entire time they're on your app after being authenticated, you can make calls to your accompanying Laravel API as if you were a logged-in user in a traditional web app.</p>
+<p>Additionally, you can use token-based authentication for standalone SPAs, native mobile applications, or something like ElectronJS desktop apps. Everything is handled in such an eloquent way, and the <a href="https://laravel.com/docs/7.x/sanctum">documentation</a> around the package is incredibly robust.</p>
+<p>I hope this article's helped you get started authenticating users into your Vue SPA with Laravel. As always, if you have any questions please don't hesitate to reach out to me in the comments below or on my <a href="https://twitter.com/aschmelyun">Twitter</a>.</p></div>
+    </div>
+</section>        <footer class="text-gray-600 body-font overflow-hidden mt-12">
+    <div class="flex flex-wrap -mx-4 -mb-10 text-center items-center justify-between">
+        <div class="w-full lg:w-1/2 mb-10 px-4 text-center lg:text-left">
+            <p class="mb-2 font-medium text-gray-900">&copy;2021 Andrew Schmelyun</p>
+            <p>This site is powered by <a href="https://github.com/aschmelyun/cleaver" target="_blank" rel="noreferrer" class="inline-block py-0.5 px-2 rounded bg-white text-gray-600 border border-gray-600 text-xs font-medium tracking-widest hover:bg-gray-600 hover:text-white transition-colors duration-200">CLEAVER 🔥🔪</a></p>
+        </div>
+        <div class="w-full lg:w-1/2 mb-10 px-4 text-center lg:text-right">
+            <p class="mb-2 font-medium text-gray-900">Follow me</p>
+                        <p>
+                                    <a href="https://github.com/aschmelyun" target="_blank" rel="noreferrer" class="text-gray-600 hover:text-gray-900 transition-colors duration-200">GitHub</a>
+                                            &nbsp;&mdash;&nbsp;
+                                                        <a href="https://twitter.com/aschmelyun" target="_blank" rel="noreferrer" class="text-gray-600 hover:text-gray-900 transition-colors duration-200">Twitter</a>
+                                            &nbsp;&mdash;&nbsp;
+                                                        <a href="https://youtube.com/aschmelyun" target="_blank" rel="noreferrer" class="text-gray-600 hover:text-gray-900 transition-colors duration-200">YouTube</a>
+                                            &nbsp;&mdash;&nbsp;
+                                                        <a href="https://dev.to/aschmelyun" target="_blank" rel="noreferrer" class="text-gray-600 hover:text-gray-900 transition-colors duration-200">Dev.to</a>
+                                                </p>
+        </div>
+    </div>
+</footer>
+<script type="text/javascript" src="/assets/js/app.js?id=d67be835fdaca4b02a6f"></script>
+    </div>
+</div>
+</body>
+</html>

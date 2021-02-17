@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <title>Adding real-time updates to your Laravel and Vue apps with laravel-websockets - Andrew Schmelyun</title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="With the help of the laravel-websockets package, it’s super easy to get a websockets server started in your Laravel application.">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Adding real-time updates to your Laravel and Vue apps with laravel-websockets" />
+    <meta property="og:description" content="With the help of the laravel-websockets package, it’s super easy to get a websockets server started in your Laravel application." />
+    <meta property="og:url" content="https://aschmelyun.com/" />
+    <meta property="og:site_name" content="Andrew Schmelyun" />
+            <meta name="og:image" content="https://aschmelyun.com/assets/images/meta/blog/adding-real-time-updates-to-your-laravel-and-vue-apps-with-laravel-websockets.jpg" />
+    
+    <meta name="twitter:description" content="With the help of the laravel-websockets package, it’s super easy to get a websockets server started in your Laravel application." />
+    <meta name="twitter:title" content="Adding real-time updates to your Laravel and Vue apps with laravel-websockets" />
+    <meta name="twitter:site" content="@aschmelyun" />
+            <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://aschmelyun.com/assets/images/meta/blog/adding-real-time-updates-to-your-laravel-and-vue-apps-with-laravel-websockets.jpg" />
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
+    <meta name="theme-color" content="#1a202c">
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/app.css?id=904aebe536c8fe3f1747">
+</head><body class="">
+<div class="container mx-auto pb-6 md:pb-12 antialiased">
+    <div class="w-auto mx-4 lg:w-4/5 lg:mx-auto">
+        <header class="text-gray-900 font-semibold">
+    <div class="container mx-auto flex flex-wrap py-4 flex-col md:flex-row items-center">
+        <a href="/" id="link-home" class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0 hover:opacity-75 transition-opacity duration-200">
+            <img src="/assets/images/andrew-schmelyun-profile.jpg" alt="Andrew Schmelyun profile picture" class="w-24 h-24 rounded-full">
+        </a>
+        <nav class="w-full md:w-auto md:ml-auto flex flex-wrap items-center text-lg justify-around lg:justify-center">
+            <a href="/blog" class="inline-flex bg-white text-gray-900 mr-0 lg:mr-6 hover:bg-gray-200 border-0 py-1 px-3 focus:outline-none transition-colors duration-200">Blog</a>
+            <a href="/videos" class="inline-flex bg-white text-gray-900 mr-0 lg:mr-6 hover:bg-gray-200 border-0 py-1 px-3 focus:outline-none transition-colors duration-200">Videos</a>
+            <a href="/uses" class="inline-flex bg-white text-gray-900 mr-0 lg:mr-6 hover:bg-gray-200 border-0 py-1 px-3 focus:outline-none transition-colors duration-200">Uses</a>
+            <a href="/projects" class="inline-flex bg-white text-gray-900 mr-0 lg:mr-6 hover:bg-gray-200 border-0 py-1 px-3 focus:outline-none transition-colors duration-200">Projects</a>
+        </nav>
+        <a href="mailto:me@aschmelyun.com?subject=Hey Andrew" class="inline-flex items-center bg-gray-200 text-gray-900 border-0 py-1 px-3 focus:outline-none hover:bg-gray-900 hover:text-white font-semibold text-lg mt-4 md:mt-0 transition-colors duration-200">Get In Touch
+            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+                <path d="M5 12h14M12 5l7 7-7 7"></path>
+            </svg>
+        </a>
+    </div>
+</header>        <section class="text-gray-600 body-font overflow-hidden mt-4 lg:mt-16">
+    <h1 class="text-3xl lg:text-4xl text-gray-900 font-medium relative">Adding real-time updates to your Laravel and Vue apps with laravel-websockets</h1>
+    <div class="pt-4 pb-12 w-full flex flex-col items-start">
+        <div class="mb-8 flex items-center">
+            <span class="inline-block mr-4 text-gray-900 font-medium">Published <time datetime="2019-07-21 00:00:00">Jul 21 2019</time></span>
+                            <span class="inline-block py-0.5 px-2 mr-2 rounded bg-white text-gray-600 border border-gray-600 text-xs font-medium tracking-widest tag-laravel">LARAVEL</span>
+                            <span class="inline-block py-0.5 px-2 mr-2 rounded bg-white text-gray-600 border border-gray-600 text-xs font-medium tracking-widest tag-vue">VUE</span>
+                    </div>
+        <div class="leading-relaxed blog-content w-full"><p>Earlier this month I launched <a href="https://listpal.co">listpal.co</a>, a to-do app that included websockets functionality so that each user with the list open would see updates from everyone else. It was definitely a learning experience and my first time really diving into the world of Vue + websockets combined. With the help of the <a href="https://github.com/beyondcode/laravel-websockets">laravel-websockets</a> package, it’s super easy to get a websockets server started in a new (or existing) Laravel application.</p>
+<p><strong>Prefer poking through code instead of reading articles?</strong> The entirety of listpal.co is open source and hosted on my GitHub if you’d like to pore over the inner workings. Otherwise, let’s get started:</p>
+<h2>Before we take off</h2>
+<p>Below I’m going to go through the steps to configure and implement the laravel-websockets package into an existing Laravel + Vue application. The following assumes you have a basic to-do app set up with a structure similar to this:</p>
+<p><img src="https://miro.medium.com/max/1400/1*MbvnTf_96rwxrO12DT1MmQ.png" alt="Code screenshot of an example Laravel app file structure" /></p>
+<p>Right now we currently have a single model (Item.php), a controller for it, a Blade template to bring in our Vue app which lists all of the items, and some basic routes in web.php. It’s assumed that on load, the Vue app calls <code>/api/items</code> to populate the list app, with a method involved to add new items in the list via <code>axios.post()</code>.</p>
+<h2>Setting up an Event</h2>
+<p><a href="https://laravel.com/docs/5.8/events">Events</a> are Laravel’s way of decoupling code that fires whenever something in particular on your app happens.</p>
+<blockquote>
+<p>Laravel’s events provide a simple observer implementation, allowing you to subscribe and listen for various events that occur in your application. Event classes are typically stored in the <code>app/Events</code> directory, while their listeners are stored in <code>app/Listeners</code>.</p>
+</blockquote>
+<p>For instance, if you’re running an ecommerce site you might have an event titled <strong>ProductOrdered</strong> which would send out an email confirmation whenever a customer purchased from your store. Instead of having that code tangled up in the product controller, it can be contained to this particular event class and fired automatically or with the global <code>event()</code> method.</p>
+<p>We’re going to make an event for when an item is added to our list, so in your console at the root of your app run:</p>
+<p><code>php artisan make:event ItemAdded</code></p>
+<p>This will create the file <strong>ItemAdded.php</strong> under app/Events, leave it exactly how it is for now. For this demo we’ll be triggering the event manually, so in your ItemController’s <code>store()</code> method add the following line. I’d recommend putting this right before your return statement:</p>
+<p><code>event(new App\Events\ItemAdded());</code></p>
+<p>There’s a little more to this event that we’ll dive into later, but now it’s time to set up our websocket server.</p>
+<h2>Adding and configuring laravel-websockets</h2>
+<p>The <a href="https://github.com/beyondcode/laravel-websockets">laravel-websockets</a> package by Marcel Pociot and Freek Van der Herten has been nothing short of incredible. What used to take a separate Node server running laravel-echo-server or socket.io can now be done entirely with PHP (and in the case of this example, within the same Laravel app codebase 🤯).</p>
+<p>Aside from that, the biggest pro for using this is that it’s a direct replacement for Pusher and <strong>fully integrated with Laravel out-of-the-box</strong>. Only the smallest amount of configuration is required to get the server up and running, and your app will happily start sending out broadcasts.</p>
+<p>Running the following commands from your app’s root will install the package, set up the necessary migrations, and publish a config file:</p>
+<p><img src="https://miro.medium.com/max/1400/1*H7_ARO70qiTKNUlq24c1Yg.png" alt="Code screenshot of the steps to install laravel-websockets" /></p>
+<p>Feel free to open up <code>config/websockets.php</code> if you want to take a look at it, however there’s <em>really</em> nothing we really need to do here. The only thing we have to do is set an ID, key, and secret for the package to use. Luckily it pulls from the PUSHER_ values in our .env file. You can set these to anything you’d like, but I’d keep them a little relevant to the project:</p>
+<pre><code>PUSHER_APP_ID=todoappid
+PUSHER_APP_KEY=todoapp
+PUSHER_APP_SECRET=todoappsecret</code></pre>
+<p>Save the file, navigate to the project root in your terminal, and run
+<code>php artisan websockets:serve</code> ✨. Our websockets server is now live and awaiting instruction!</p>
+<h2>Back to our event</h2>
+<p>Now that we have our websockets port up and running, we need to give it data to broadcast out. Again, Laravel has made this <em>insanely</em> easy. If you open up our file at <code>app/Events/ItemAdded.php</code> you’ll see the default class includes <code>Illuminate\Contracts\Broadcasting\ShouldBroadcast</code>. This interface can be implemented into our class enabling its use with Pusher (and thus laravel-websockets).</p>
+<p>Any public variables that are set in this class are broadcasted out when this event fires. Since each time an item is added, we’d like our application to update its list with all items from the database, we’ll set a single public variable called <code>$items</code> and populate it in the constructor.</p>
+<p>Finally, the <code>broadcastOn()</code> method will return a channel name of our choosing that this data will be broadcasted to. Everything tied together should look something like this:</p>
+<p><img src="https://miro.medium.com/max/1400/1*hs5n0FujLU6er--06IeCkQ.png" alt="Code screenshot of an example Event in a Laravel app" /></p>
+<p>That’s the end of the modifications needed to the backend of our app! Now, let’s move onto some JavaScript.</p>
+<h2>Modifying the Vue front-end</h2>
+<p>If you’re using Laravel’s setup for Vue, chances are there’s a section commented out at the bottom of your <code>bootstrap.js</code> file that looks like this:</p>
+<p><img src="https://miro.medium.com/max/1400/1*uTaHz8vsEjjiETB46Br2bg.png" alt="Code screenshot of Laravel Echo in a JavaScript file" /></p>
+<p>Uncomment that entire block. This opens up our app to the Laravel Echo package, which will initialize at the beginning of our application. Using the key we’ve entered in our <code>.env</code> file, it’ll initialize the information we need to start listening to our websocket server.</p>
+<p>The next step might be a bit tricky depending on how you’re pulling in data and whether or not you’re using a state management library like Vuex. <strong>Let’s assume that you’re not</strong>, and instead on the main Vue component you’re using an array in the data object to store the items, and calling a method using axios to post data to your API when an item is added. During the success handle you’re simply replacing the data in your component with what’s returned from the server.</p>
+<p>However now, we’re going to implement Echo into a lifecycle method and have it listen on our channel we specified earlier. <strong>When a callback is fired, we replace the data in the component with the public property that was broadcasted out through the event.</strong> An example of how that would be set up could look like this:</p>
+<p><img src="https://miro.medium.com/max/1400/1*gSfbqiLqoWMyQIgZKp4gEQ.png" alt="Code screenshot of an example Vue component with laravel-websockets" /></p>
+<p>🎉 🎉 🎉</p>
+<p>This removes the need to have our axios call touch our data, as soon as our new item is added to the server an event is fired and Echo handles it.</p>
+<h2>Tying it all together</h2>
+<p>Just to reiterate, we’ve:</p>
+<ul>
+<li>
+<p>Installed the laravel-websockets package using the default configuration</p>
+</li>
+<li>
+<p>Started the websocket server with <code>php artisan websockets:serve</code></p>
+</li>
+<li>
+<p>Added an Event called <strong>ItemAdded</strong> that implements ShouldBroadcast</p>
+</li>
+<li>
+<p>Added Echo to our Laravel application’s bootstrap.js file</p>
+</li>
+<li>
+<p>Replaced the method of updating data in our Vue component with an Echo listener and removing the axios success callback</p>
+</li>
+</ul>
+<p>Personally, this has really opened up a world of opportunity for my projects. I always thought that any kind of websockets functionality would be a pretty large undertaking and require additional frameworks or separate server instances, but this method really proved me wrong.</p>
+<p>Using this as a baseline you can expand upon it and add in different events for each model or action (save, delete, update), or use Echo in combination with Vuex to perform commits on your store’s data. The possibilities are pretty wide when you’re able to do this with PHP or inside of your existing Laravel app.</p>
+<p>If you’d like to connect, have any questions, or would be interested in more bite-sized hints from the PHP/Laravel/Vue/general web-dev world, feel free to follow me on <a href="https://twitter.com/aschmelyun">Twitter</a>!</p></div>
+    </div>
+</section>        <footer class="text-gray-600 body-font overflow-hidden mt-12">
+    <div class="flex flex-wrap -mx-4 -mb-10 text-center items-center justify-between">
+        <div class="w-full lg:w-1/2 mb-10 px-4 text-center lg:text-left">
+            <p class="mb-2 font-medium text-gray-900">&copy;2021 Andrew Schmelyun</p>
+            <p>This site is powered by <a href="https://github.com/aschmelyun/cleaver" target="_blank" rel="noreferrer" class="inline-block py-0.5 px-2 rounded bg-white text-gray-600 border border-gray-600 text-xs font-medium tracking-widest hover:bg-gray-600 hover:text-white transition-colors duration-200">CLEAVER 🔥🔪</a></p>
+        </div>
+        <div class="w-full lg:w-1/2 mb-10 px-4 text-center lg:text-right">
+            <p class="mb-2 font-medium text-gray-900">Follow me</p>
+                        <p>
+                                    <a href="https://github.com/aschmelyun" target="_blank" rel="noreferrer" class="text-gray-600 hover:text-gray-900 transition-colors duration-200">GitHub</a>
+                                            &nbsp;&mdash;&nbsp;
+                                                        <a href="https://twitter.com/aschmelyun" target="_blank" rel="noreferrer" class="text-gray-600 hover:text-gray-900 transition-colors duration-200">Twitter</a>
+                                            &nbsp;&mdash;&nbsp;
+                                                        <a href="https://youtube.com/aschmelyun" target="_blank" rel="noreferrer" class="text-gray-600 hover:text-gray-900 transition-colors duration-200">YouTube</a>
+                                            &nbsp;&mdash;&nbsp;
+                                                        <a href="https://dev.to/aschmelyun" target="_blank" rel="noreferrer" class="text-gray-600 hover:text-gray-900 transition-colors duration-200">Dev.to</a>
+                                                </p>
+        </div>
+    </div>
+</footer>
+<script type="text/javascript" src="/assets/js/app.js?id=d67be835fdaca4b02a6f"></script>
+    </div>
+</div>
+</body>
+</html>

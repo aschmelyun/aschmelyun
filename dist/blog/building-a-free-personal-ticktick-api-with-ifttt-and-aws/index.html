@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <title>Building a free TickTick API with IFTTT and AWS - Andrew Schmelyun</title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="TickTick doesn&#039;t currently have an open developer API, but with IFTTT integration and a few free Amazon AWS services, you can make a simple one that works well enough">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Building a free TickTick API with IFTTT and AWS" />
+    <meta property="og:description" content="TickTick doesn&#039;t currently have an open developer API, but with IFTTT integration and a few free Amazon AWS services, you can make a simple one that works well enough" />
+    <meta property="og:url" content="https://aschmelyun.com/" />
+    <meta property="og:site_name" content="Andrew Schmelyun" />
+            <meta name="og:image" content="https://aschmelyun.com/assets/images/meta/blog/building-a-free-personal-ticktick-api-with-ifttt-and-aws.jpg" />
+    
+    <meta name="twitter:description" content="TickTick doesn&#039;t currently have an open developer API, but with IFTTT integration and a few free Amazon AWS services, you can make a simple one that works well enough" />
+    <meta name="twitter:title" content="Building a free TickTick API with IFTTT and AWS" />
+    <meta name="twitter:site" content="@aschmelyun" />
+            <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://aschmelyun.com/assets/images/meta/blog/building-a-free-personal-ticktick-api-with-ifttt-and-aws.jpg" />
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
+    <meta name="theme-color" content="#1a202c">
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/app.css?id=904aebe536c8fe3f1747">
+</head><body class="">
+<div class="container mx-auto pb-6 md:pb-12 antialiased">
+    <div class="w-auto mx-4 lg:w-4/5 lg:mx-auto">
+        <header class="text-gray-900 font-semibold">
+    <div class="container mx-auto flex flex-wrap py-4 flex-col md:flex-row items-center">
+        <a href="/" id="link-home" class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0 hover:opacity-75 transition-opacity duration-200">
+            <img src="/assets/images/andrew-schmelyun-profile.jpg" alt="Andrew Schmelyun profile picture" class="w-24 h-24 rounded-full">
+        </a>
+        <nav class="w-full md:w-auto md:ml-auto flex flex-wrap items-center text-lg justify-around lg:justify-center">
+            <a href="/blog" class="inline-flex bg-white text-gray-900 mr-0 lg:mr-6 hover:bg-gray-200 border-0 py-1 px-3 focus:outline-none transition-colors duration-200">Blog</a>
+            <a href="/videos" class="inline-flex bg-white text-gray-900 mr-0 lg:mr-6 hover:bg-gray-200 border-0 py-1 px-3 focus:outline-none transition-colors duration-200">Videos</a>
+            <a href="/uses" class="inline-flex bg-white text-gray-900 mr-0 lg:mr-6 hover:bg-gray-200 border-0 py-1 px-3 focus:outline-none transition-colors duration-200">Uses</a>
+            <a href="/projects" class="inline-flex bg-white text-gray-900 mr-0 lg:mr-6 hover:bg-gray-200 border-0 py-1 px-3 focus:outline-none transition-colors duration-200">Projects</a>
+        </nav>
+        <a href="mailto:me@aschmelyun.com?subject=Hey Andrew" class="inline-flex items-center bg-gray-200 text-gray-900 border-0 py-1 px-3 focus:outline-none hover:bg-gray-900 hover:text-white font-semibold text-lg mt-4 md:mt-0 transition-colors duration-200">Get In Touch
+            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+                <path d="M5 12h14M12 5l7 7-7 7"></path>
+            </svg>
+        </a>
+    </div>
+</header>        <section class="text-gray-600 body-font overflow-hidden mt-4 lg:mt-16">
+    <h1 class="text-3xl lg:text-4xl text-gray-900 font-medium relative">Building a free TickTick API with IFTTT and AWS</h1>
+    <div class="pt-4 pb-12 w-full flex flex-col items-start">
+        <div class="mb-8 flex items-center">
+            <span class="inline-block mr-4 text-gray-900 font-medium">Published <time datetime="2021-01-22 00:00:00">Jan 22 2021</time></span>
+                            <span class="inline-block py-0.5 px-2 mr-2 rounded bg-white text-gray-600 border border-gray-600 text-xs font-medium tracking-widest tag-aws">AWS</span>
+                    </div>
+        <div class="leading-relaxed blog-content w-full"><p>This article doesn't expect you to have any in-depth familiarity with AWS or IFTTT. However, it is required that you have accounts for both, and recommended that you've at least played around with both of them a little bit. The free tiers of both of these services is all that's required to get your personal API running, so this doesn't cost a single cent.</p>
+<p><strong>Disclaimer:</strong> This is not intended to replace a full-featured API and only works for your own TickTick account. It was built for a very simple purpose of mine, but depending on your use case, it could be perfect for you as well.</p>
+<p>Anyway, let's get started! 🎉</p>
+<h2>Backstory</h2>
+<p>Over the past couple of months I've been experimenting with a little hardware project, the goal being to <strong>display a current to-do item I'm focusing</strong> on through an e-ink screen using a Raspberry Pi. On the program's startup, I was calling an API to grab my to-do list and store the items in an array, then cycling through each to display on my screen.</p>
+<p>A problem came up when after the New Year I switched services to <strong><a href="https://ticktick.com">TickTick</a></strong>. I had been thinking about moving away from the last app that I used, and the fact that they have a built-in Pomodoro timer solidified the switch for me and I haven't looked back.</p>
+<p><strong>But, they don't have an open API.</strong></p>
+<p>It seems like it's an item that has been <a href="https://lmgtfy.app/?q=ticktick+api">requested a few times</a>, and currently seems to be an item that they're working on. But as of the writing of this article, they do not have one available to the public. I get it though, pushing new features to production takes time, but that was time that I didn't want to wait. <strong>So, I started digging around trying to find my own way.</strong></p>
+<p>I thought I'd just go the brute force method and use something like <a href="https://pptr.dev/">Puppeteer</a> to sign in to the app and scrape out any data I could. But then I remembered <a href="https://ifttt.com">IFTTT</a> exists, and decided to see if they happened to have a trigger for tasks from TickTick. Lo and behold, they did! So my plan started coming together.</p>
+<p><strong>Here's how I did it, and how you can too.</strong></p>
+<h2>Getting Started</h2>
+<p>First thing's first, if you haven't already, sign up for an <a href="https://aws.amazon.com/">Amazon AWS</a> account. This is what will end up powering our actual API, using the following services:</p>
+<ul>
+<li><strong>Lambda</strong> for processing incoming data from our API endpoints and sending it to/getting it from our database</li>
+<li><strong>API Gateway</strong> for creating our endpoints and connecting them to our Lambda instances</li>
+<li><strong>DynamoDB</strong> for being the NoSQL database storing our todo items</li>
+</ul>
+<p>All of these services have generous free usage tiers that don't expire. Unless you're going to be using this API every minute, <strong>you shouldn't incur any direct costs.</strong></p>
+<p>Everything we need to do in order to set up these three services is going to be handled through the command line using the  <code>serverless</code> app. We'll be loosely following <a href="https://www.serverless.com/examples/aws-node-rest-api-with-dynamodb">this tutorial</a> to create our serverless AWS API.</p>
+<p>Go ahead and open up a terminal or command prompt window, and run the following command to get the serverless app installed:</p>
+<pre><code class="language-bash">npm install serverless -g</code></pre>
+<blockquote>
+<p><strong>Side Note:</strong> Don't have Node or npm installed? Check out <a href="https://docs.npmjs.com/downloading-and-installing-node-js-and-npm">this link</a> and finish that before continuing with the above command.</p>
+</blockquote>
+<p>Once that's completed, run this command to get the serverless todo demo API installed locally. This is going to be the basis for our API:</p>
+<pre><code class="language-bash">serverless install -u https://github.com/serverless/examples/tree/master/aws-node-rest-api-with-dynamodb -n ticktick-api</code></pre>
+<p>Navigate to the new folder created, <code>ticktick-api</code>, and open up the code with your favorite editor.</p>
+<p><strong>Now it's time to start working on our API.</strong></p>
+<h2>Creating our Serverless API</h2>
+<p>After opening up your new project, you should see a file structure that looks like this:</p>
+<pre><code>ticktick-api/
+├── todos/
+│   ├── create.js
+│   ├── delete.js
+│   ├── get.js
+│   ├── list.js
+│   └── update.js
+├── package.json
+├── README.md
+└── serverless.yml</code></pre>
+<p>It's a pretty simple layout, each one of the files under the <code>todos</code> directory is a specific endpoint for our API. They're going to be powered by a <strong>Node Lambda</strong> instance, interact with our database, and return something back in the request. The <code>serverless.yml</code> file ties everything together, and generates the AWS services that we need in this API.</p>
+<p>Before we actually deploy this though, we'll need to make some slight adjustments based on the data that we're pulling in and storing.</p>
+<p>Opening up <code>create.js</code>, you'll see the following lines of code:</p>
+<pre><code class="language-js">if (typeof data.text !== 'string') {
+  console.error('Validation Failed');
+  callback(null, {
+    statusCode: 400,
+    headers: { 'Content-Type': 'text/plain' },
+    body: 'Couldn\'t create the todo item.',
+  });
+  return;
+}
+
+const params = {
+  TableName: process.env.DYNAMODB_TABLE,
+  Item: {
+    id: uuid.v1(),
+    text: data.text,
+    checked: false,
+    createdAt: timestamp,
+    updatedAt: timestamp,
+  },
+};</code></pre>
+<p>This isn't bad, but I'd like to add the ability to store the <strong>list</strong> from TickTick as well as the todo item's text. So, let's make some adjustments to add that datapoint in there as well:</p>
+<pre><code class="language-js">if (typeof data.text !== 'string' || typeof data.list !== 'string') {
+  console.error('Validation Failed');
+  callback(null, {
+    statusCode: 400,
+    headers: { 'Content-Type': 'text/plain' },
+    body: 'Couldn\'t create the todo item.',
+  });
+  return;
+}
+
+const params = {
+  TableName: process.env.DYNAMODB_TABLE,
+  Item: {
+    id: uuid.v1(),
+    text: data.text,
+    list: data.list,
+    checked: false,
+    createdAt: timestamp,
+    updatedAt: timestamp,
+  },
+};</code></pre>
+<p>Okay, that's good. Let's open up our <code>update.js</code> file as well and add that <strong>list</strong> attribute there too. I won't show the before here, but this is what lines 12-37 should look like with both the text and list attributes:</p>
+<pre><code class="language-js">if (typeof data.text !== 'string' || typeof data.list !== 'string' || typeof data.checked !== 'boolean') {
+  console.error('Validation Failed');
+  callback(null, {
+    statusCode: 400,
+    headers: { 'Content-Type': 'text/plain' },
+    body: 'Couldn\'t update the todo item.',
+  });
+  return;
+}
+
+const params = {
+  TableName: process.env.DYNAMODB_TABLE,
+  Key: {
+    id: event.pathParameters.id,
+  },
+  ExpressionAttributeNames: {
+    '#todo_text': 'text',
+    '#todo_list': 'list',
+  },
+  ExpressionAttributeValues: {
+    ':text': data.text,
+    ':list': data.list,
+    ':checked': data.checked,
+    ':updatedAt': timestamp,
+  },
+  UpdateExpression: 'SET #todo_text = :text, #todo_list = :list, checked = :checked, updatedAt = :updatedAt',
+  ReturnValues: 'ALL_NEW',
+};</code></pre>
+<p>Lastly, open up <code>serverless.yml</code> and remove the <code>frameworkVersion: "&gt;=1.1.0 &lt;2.0.0"</code> line entirely. Save that file, and we're ready to deploy.</p>
+<p>Back in the command line, run the following commands to install any dependencies, bundle everything together, and deploy your API:</p>
+<pre><code class="language-bash">npm install
+
+serverless deploy</code></pre>
+<p>You should get back a set of endpoints like this:</p>
+<pre><code class="language-bash">Service Information
+service: ticktick-api
+stage: dev
+region: us-east-1
+api keys:
+  None
+endpoints:
+  POST - https://xxxxx.execute-api.us-east-1.amazonaws.com/dev/todos
+  GET - https://xxxxx.execute-api.us-east-1.amazonaws.com/dev/todos
+  GET - https://xxxxx.execute-api.us-east-1.amazonaws.com/dev/todos/{id}
+  PUT - https://xxxxx.execute-api.us-east-1.amazonaws.com/dev/todos/{id}
+  DELETE - https://xxxxx.execute-api.us-east-1.amazonaws.com/dev/todos/{id}
+functions:
+  ticktick-api-dev-update: arn:aws:lambda:us-east-1:12345:function:ticktick-api-dev-update
+  ticktick-api-dev-get: arn:aws:lambda:us-east-1:12345:function:ticktick-api-dev-get
+  ticktick-api-dev-list: arn:aws:lambda:us-east-1:12345:function:ticktick-api-dev-list
+  ticktick-api-dev-create: arn:aws:lambda:us-east-1:12345:function:ticktick-api-dev-create
+  ticktick-api-dev-delete: arn:aws:lambda:us-east-1:12345:function:ticktick-api-dev-delete</code></pre>
+<blockquote>
+<p><strong>Note:</strong> If you get an error back about AWS provider credentials not being found, follow <a href="https://www.serverless.com/framework/docs/providers/aws/guide/credentials/">this guide</a> to set them up in order to work with your serverless CLI app.</p>
+</blockquote>
+<p>Alright, so now you should be able to visit your API endpoint at <code>https://xxxxx.execute-api.us-east-1.amazonaws.com/dev/todos</code>, and as of right now it should be returning back an empty array.</p>
+<p><strong>If so, we're on the right track, and we can move on to getting data from TickTick into it.</strong></p>
+<h2>Setting up IFTTT</h2>
+<p>Okay, let's head over to IFTTT and either create or sign in to your account. This is going to function as the tie between TickTick and our newly-created API.</p>
+<p>Create a new Applet, and for the service select TickTick. You're presented with two possible triggers, of which we're going to use both. But for this first one, select <strong>New task created</strong>.</p>
+<p><img src="https://dev-to-uploads.s3.amazonaws.com/i/ykbakqmqeasapb0r15lw.png" alt="Screenshot of IFTTT triggers for the TickTick service. Options are New task created, or New completed task" /></p>
+<p>On the next screen, you'll determine if you want to limit this by only firing on select task lists, tags, or priorities. Me personally, I'm using the Inbox list, with all tags and any priority, so it looks like this:</p>
+<p><img src="https://dev-to-uploads.s3.amazonaws.com/i/b9fwrqfvl4tmm1mvxxtq.png" alt="Screenshot of the options for a TickTick trigger in IFTTT. Options shown are List, with Inbox selected, Tag, with no selection, and Priority, with no selection." /></p>
+<p>Hit create, and we're brought back to the Applet creation screen for the <strong>TT</strong> in IFTTT.</p>
+<p>Select the Webhooks service, and on the following page choose the only action available, <strong>Make a web request</strong>.</p>
+<p>On this page, we're going to add in all of the details for the web request. The URL is going to be one of the ones returned to us by serverless earlier, and should end in just <code>/dev/todos</code>.</p>
+<p>Set the method to <code>POST</code>, and the Content Type to <code>application/json</code>.</p>
+<p>Finally, for the body, we're going to create a JSON string that will also contain data from our TickTick to-do item, pulled in automatically with the help of IFTTT.</p>
+<p>All of these form fields should look like the screenshot below:</p>
+<p><img src="https://dev-to-uploads.s3.amazonaws.com/i/bz2sqpp6gzliareukdq5.png" alt="Screenshot of a Web request action in IFTTT. The options are URL which says https://xxxxx.execute-api.us-east-1.amazonaws.com, Method which has POST selected, Content Type which has application/json selected, and Body which has a JSON string containing text TaskName and list List." /></p>
+<p><strong>Once that's saved, we're ready to test it out!</strong></p>
+<p>Head over to your TickTick app, and create a new to-do item. When making the trigger in IFTTT, if you set any of the optional requirements like a specific list or tag, be sure to set those to make sure everything is working correctly.</p>
+<p>Within a minute or so, we should be able to load up the main <code>/dev/todos</code> API endpoint in a browser and get back an array containing any of the items that we added to TickTick in our test. They each should contain the task name, list name, timestamps, and a unique ID. That ID can then be used to pull in a single item, update it, or delete it from the database altogether.</p>
+<h2>Marking an item complete</h2>
+<p>You may have noticed that the above only pulls in items to our API when they're <em>created</em>. But, what if we want to update an item in our API when it's checked off in TickTick?</p>
+<p>We can do that! First head back to the IFTTT dashboard and create a new Applet, with TickTick as the service. This time, choose the other trigger, <strong>New completed task</strong>. Again, choose what filters you would like (lists, tags, etc), and moving onto the action step, select Webhooks.</p>
+<p>We're going to make a request to an endpoint on our API called <code>/dev/todos/complete</code>. Don't worry, we'll create this shortly. Use the <code>PUT</code> Method, <code>application/json</code> Content Type, the same Body from the create Applet, and save it.</p>
+<p>Now, let's open our ticktick-api code back up, and take a look at the <code>update.js</code> file. This normally would expect an ID in the URL along with data attributes posted to it, in order to update a todo item. However, we're going to do some slight modifications in order to determine what item from what list needs to be updated, and mark it of as checked in our DynamoDB instance.</p>
+<p>This is what that updated file should look like:</p>
+<pre><code class="language-js">'use strict';
+
+const AWS = require('aws-sdk');
+
+const dynamoDb = new AWS.DynamoDB.DocumentClient();
+
+module.exports.update = (event, context, callback) =&gt; {
+  const timestamp = new Date().getTime();
+  const data = JSON.parse(event.body);
+
+  const params = {
+    TableName: process.env.DYNAMODB_TABLE,
+    ExpressionAttributeValues: {
+      ':text': 'text',
+      ':list': 'list',
+    },
+    FilterExpression: 'list = :list and text = :text'
+  };
+
+  dynamoDb.scan(params, function (error, result) {
+
+    result.Items.forEach(function (element, index, array) {
+      const updateParams = {
+        TableName: process.env.DYNAMODB_TABLE,
+        Key: {
+          id: event.pathParameters.id,
+        },
+        ExpressionAttributeNames: {
+          '#todo_text': 'text',
+          '#todo_list': 'list',
+        },
+        ExpressionAttributeValues: {
+          ':text': data.text,
+          ':list': data.list,
+          ':checked': true,
+          ':updatedAt': timestamp,
+        },
+        UpdateExpression: 'SET #todo_text = :text, #todo_list = :list, checked = :checked, updatedAt = :updatedAt',
+        ReturnValues: 'ALL_NEW',
+      }
+
+      dynamoDb.update(updateParams, (error, result) =&gt; {
+        const response = {
+          statusCode: 200,
+          body: JSON.stringify(result.Attributes),
+        };
+        callback(null, response);
+      });
+    });
+  });
+};</code></pre>
+<p>Now all we have to do is run <code>serverless deploy</code> from our terminal again to update our Lambda instances and we're good to go! If we check off an item in TickTick, that same item in our API will have a <code>checked: true</code> attribute.</p>
+<h2>That's it!</h2>
+<p>You now have your very own personal TickTick REST API that you can use to store items you've added in your lists and reference them programmatically in other applications. If you have any questions about this, please feel free to let me know in the comments.</p>
+<p>Follow me here or on <a href="https://twitter.com/aschmelyun">Twitter</a> for more updates on what I'm using this API for, and other web development projects I'm working on.</p></div>
+    </div>
+</section>        <footer class="text-gray-600 body-font overflow-hidden mt-12">
+    <div class="flex flex-wrap -mx-4 -mb-10 text-center items-center justify-between">
+        <div class="w-full lg:w-1/2 mb-10 px-4 text-center lg:text-left">
+            <p class="mb-2 font-medium text-gray-900">&copy;2021 Andrew Schmelyun</p>
+            <p>This site is powered by <a href="https://github.com/aschmelyun/cleaver" target="_blank" rel="noreferrer" class="inline-block py-0.5 px-2 rounded bg-white text-gray-600 border border-gray-600 text-xs font-medium tracking-widest hover:bg-gray-600 hover:text-white transition-colors duration-200">CLEAVER 🔥🔪</a></p>
+        </div>
+        <div class="w-full lg:w-1/2 mb-10 px-4 text-center lg:text-right">
+            <p class="mb-2 font-medium text-gray-900">Follow me</p>
+                        <p>
+                                    <a href="https://github.com/aschmelyun" target="_blank" rel="noreferrer" class="text-gray-600 hover:text-gray-900 transition-colors duration-200">GitHub</a>
+                                            &nbsp;&mdash;&nbsp;
+                                                        <a href="https://twitter.com/aschmelyun" target="_blank" rel="noreferrer" class="text-gray-600 hover:text-gray-900 transition-colors duration-200">Twitter</a>
+                                            &nbsp;&mdash;&nbsp;
+                                                        <a href="https://youtube.com/aschmelyun" target="_blank" rel="noreferrer" class="text-gray-600 hover:text-gray-900 transition-colors duration-200">YouTube</a>
+                                            &nbsp;&mdash;&nbsp;
+                                                        <a href="https://dev.to/aschmelyun" target="_blank" rel="noreferrer" class="text-gray-600 hover:text-gray-900 transition-colors duration-200">Dev.to</a>
+                                                </p>
+        </div>
+    </div>
+</footer>
+<script type="text/javascript" src="/assets/js/app.js?id=d67be835fdaca4b02a6f"></script>
+    </div>
+</div>
+</body>
+</html>
