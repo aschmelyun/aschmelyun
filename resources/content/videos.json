@@ -1,0 +1,7 @@
+{
+  "view": "layout.videos",
+  "path": "/videos",
+  "title": "Videos",
+  "description": "A full-stack PHP developer with a love for Laravel, Vue, and Docker.",
+  "videos": "/data/videos.json"
+}

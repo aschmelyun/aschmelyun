@@ -4,6 +4,7 @@ namespace Tests;
 
 use Aschmelyun\Cleaver\Compilers\JsonCompiler;
 use Aschmelyun\Cleaver\Engines\FileEngine;
+use Symfony\Component\Finder\SplFileInfo;
 
 class JsonCompilerTest extends TestCase
 {
@@ -18,9 +19,11 @@ class JsonCompilerTest extends TestCase
             'path' => '/',
             'title' => 'This is a test'
         ];
-        $contentFile = 'test.json';
+        $contentFile = FileEngine::contentDir() . 'test.json';
 
-        file_put_contents(FileEngine::contentDir() . $contentFile, json_encode($content));
+        file_put_contents($contentFile, json_encode($content));
+
+        $contentFile = new SplFileInfo($contentFile, FileEngine::contentDir(), $contentFile);
         $compiler = new JsonCompiler($contentFile);
 
         $expected = 'layout.test';
@@ -45,29 +48,33 @@ class JsonCompilerTest extends TestCase
             'path' => '/',
             'title' => 'This is a test'
         ];
-        $contentFile = 'test.json';
+        $contentFile = FileEngine::contentDir() . 'test.json';
 
-        file_put_contents(FileEngine::contentDir() . $contentFile, json_encode($content));
+        file_put_contents($contentFile, json_encode($content));
+
+        $contentFile = new SplFileInfo($contentFile, FileEngine::contentDir(), $contentFile);
         $compiler = new JsonCompiler($contentFile);
 
-        $this->assertFalse($compiler->checkFormatting());
+        $this->assertFalse($compiler->checkContent(false));
     }
 
     /**
      * @test
      */
-    public function will_return_false_for_formatting_json_files_without_path_set()
+    public function will_return_true_for_formatting_json_files_without_path_set()
     {
         $content = [
             'view' => 'layout.test',
             'title' => 'This is a test'
         ];
-        $contentFile = 'test.json';
+        $contentFile = FileEngine::contentDir() . 'test.json';
 
-        file_put_contents(FileEngine::contentDir() . $contentFile, json_encode($content));
+        file_put_contents($contentFile, json_encode($content));
+
+        $contentFile = new SplFileInfo($contentFile, FileEngine::contentDir(), $contentFile);
         $compiler = new JsonCompiler($contentFile);
 
-        $this->assertFalse($compiler->checkFormatting());
+        $this->assertTrue($compiler->checkContent(false));
     }
 
     /**
@@ -80,12 +87,14 @@ class JsonCompilerTest extends TestCase
             'path' => '/',
             'title' => 'This is a test'
         ];
-        $contentFile = 'test.json';
+        $contentFile = FileEngine::contentDir() . 'test.json';
 
-        file_put_contents(FileEngine::contentDir() . $contentFile, json_encode($content));
+        file_put_contents($contentFile, json_encode($content));
+
+        $contentFile = new SplFileInfo($contentFile, FileEngine::contentDir(), $contentFile);
         $compiler = new JsonCompiler($contentFile);
 
-        $this->assertTrue($compiler->checkFormatting());
+        $this->assertTrue($compiler->checkContent(false));
     }
 
 }

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <title>Using the magic of mkcert to enable valid https on local dev sites - Andrew Schmelyun</title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Mkcert is an incredible open-source command-line tool that generates trusted development certificates that you can use to enable https on local websites">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Using the magic of mkcert to enable valid https on local dev sites" />
+    <meta property="og:description" content="Mkcert is an incredible open-source command-line tool that generates trusted development certificates that you can use to enable https on local websites" />
+    <meta property="og:url" content="https://aschmelyun.com/" />
+    <meta property="og:site_name" content="Andrew Schmelyun" />
+            <meta name="og:image" content="https://aschmelyun.com/assets/images/meta/blog/using-the-magic-of-mkcert-to-enable-valid-https-on-local-dev-sites.jpg" />
+    
+    <meta name="twitter:description" content="Mkcert is an incredible open-source command-line tool that generates trusted development certificates that you can use to enable https on local websites" />
+    <meta name="twitter:title" content="Using the magic of mkcert to enable valid https on local dev sites" />
+    <meta name="twitter:site" content="@aschmelyun" />
+            <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://aschmelyun.com/assets/images/meta/blog/using-the-magic-of-mkcert-to-enable-valid-https-on-local-dev-sites.jpg" />
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
+    <meta name="theme-color" content="#1a202c">
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/app.css?id=904aebe536c8fe3f1747">
+</head><body class="">
+<div class="container mx-auto pb-6 md:pb-12 antialiased">
+    <div class="w-auto mx-4 lg:w-4/5 lg:mx-auto">
+        <header class="text-gray-900 font-semibold">
+    <div class="container mx-auto flex flex-wrap py-4 flex-col md:flex-row items-center">
+        <a href="/" id="link-home" class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0 hover:opacity-75 transition-opacity duration-200">
+            <img src="/assets/images/andrew-schmelyun-profile.jpg" alt="Andrew Schmelyun profile picture" class="w-24 h-24 rounded-full">
+        </a>
+        <nav class="w-full md:w-auto md:ml-auto flex flex-wrap items-center text-lg justify-around lg:justify-center">
+            <a href="/blog" class="inline-flex bg-white text-gray-900 mr-0 lg:mr-6 hover:bg-gray-200 border-0 py-1 px-3 focus:outline-none transition-colors duration-200">Blog</a>
+            <a href="/videos" class="inline-flex bg-white text-gray-900 mr-0 lg:mr-6 hover:bg-gray-200 border-0 py-1 px-3 focus:outline-none transition-colors duration-200">Videos</a>
+            <a href="/uses" class="inline-flex bg-white text-gray-900 mr-0 lg:mr-6 hover:bg-gray-200 border-0 py-1 px-3 focus:outline-none transition-colors duration-200">Uses</a>
+            <a href="/projects" class="inline-flex bg-white text-gray-900 mr-0 lg:mr-6 hover:bg-gray-200 border-0 py-1 px-3 focus:outline-none transition-colors duration-200">Projects</a>
+        </nav>
+        <a href="mailto:me@aschmelyun.com?subject=Hey Andrew" class="inline-flex items-center bg-gray-200 text-gray-900 border-0 py-1 px-3 focus:outline-none hover:bg-gray-900 hover:text-white font-semibold text-lg mt-4 md:mt-0 transition-colors duration-200">Get In Touch
+            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+                <path d="M5 12h14M12 5l7 7-7 7"></path>
+            </svg>
+        </a>
+    </div>
+</header>        <section class="text-gray-600 body-font overflow-hidden mt-4 lg:mt-16">
+    <h1 class="text-3xl lg:text-4xl text-gray-900 font-medium relative">Using the magic of mkcert to enable valid https on local dev sites</h1>
+    <div class="pt-4 pb-12 w-full flex flex-col items-start">
+        <div class="mb-8 flex items-center">
+            <span class="inline-block mr-4 text-gray-900 font-medium">Published <time datetime="2020-09-01 00:00:00">Sep 1 2020</time></span>
+                            <span class="inline-block py-0.5 px-2 mr-2 rounded bg-white text-gray-600 border border-gray-600 text-xs font-medium tracking-widest tag-productivity">PRODUCTIVITY</span>
+                    </div>
+        <div class="leading-relaxed blog-content w-full"><p>Want to skip the tutorial below and dig in for yourself? Check out the <a href="https://github.com/FiloSottile/mkcert">repo</a> and follow along with the instructions on the README.</p>
+<h2>Local https is awful</h2>
+<p>If you're a web developer, it's very likely you've used local dev sites to build your applications on. Something like <code>example.test</code> or <code>mycoolsite.devlocal</code>, right? When I'm spinning up a basic content site, I really don't pay attention to wrapping it up in https. However, when you start digging into more complex applications, especially those requiring registration and logins, https is useful and sometimes downright required depending on your frontend.</p>
+<p><strong>Google Chrome (and most modern browsers), have taken a large stance against unencrypted http sites.</strong> This <em>includes</em> dev sites and those that use development TLDs like <code>.test</code> and <code>.devlocal</code>. Usually you'll see a small exclamation point or some kind of notice in your address bar's left corner, but that changes when authentication comes into play. You'll see even larger notices about submitting information on an insecure website, and may even be blocked from performing that action.</p>
+<p>A potential solution is &quot;Let's create local self-signed certificates to enable https on our site&quot;. If we go <a href="https://lmgtfy.com/?q=create+local+https+certificate">searching for tutorials</a> on how to accomplish that, there's literally a massive amount of options out there for every major operating system. The general consensus <strong>if you're doing something like this from the command line, is using a tool like openssl</strong>. Then, in your Nginx or Apache config file, enabling https, listening to the <code>:443</code> port, and referencing that file as your ssl certificate.</p>
+<p>This worked, <em>kind of</em>. On my local dev app, whenever I'd navigate to the <code>https://</code> version, I'd be presented with a huge <strong>&quot;THIS SITE IS INSECURE&quot;</strong> full-screen pop-up. At first, it didn't bother me all that much. I could just click a &quot;Continue to insecure site&quot; button, my browser would remember my choice, and I could continue through the site. Albeit with a large red insecure https badge in the address bar, it still got the job done.</p>
+<p><img src="https://dev-to-uploads.s3.amazonaws.com/i/jdle2ctgfy7kd4xcipf6.png" alt="Screenshot of Chrome giving an error that says your connection is not private for example.test" /></p>
+<p>Then came the issue on newer versions of MacOS, where you wouldn't even <em>see</em> a &quot;Continue to insecure site&quot; bypass button on Chrome's popup. In order to actually <em>get it to appear</em>, you have to do <a href="https://stackoverflow.com/a/62379446">this awful process</a> of saving the ssl certificate to your desktop, opening it up in Keychain Access, and manually setting the trust for it. And even then, <strong>that just made the bypass button appear again</strong>, still showing that large insecure badge on your site's address bar.</p>
+<p><strong><em>There has to be a better way.</em></strong></p>
+<h2>In walks mkcert</h2>
+<p>I honestly don't remember where I first came across <a href="https://github.com/FiloSottile/mkcert">mkcert</a>. It might have been on a Reddit post, Twitter thread, or random StackOverflow answer, but I am <em>so</em> glad that I did.</p>
+<p>So, <strong>what is it?</strong> Mkcert is a command-line tool that does two things:</p>
+<ol>
+<li>It generates a local certificate authority on your machine.</li>
+<li>It creates self-signed ssl certificates <em>against</em> that authority.</li>
+</ol>
+<p>What this means is that whenever your browser loads up a development site that uses one of its generated certs for <code>https</code>, it's validating that certificate against the dummy validation service installed on your machine. Therefore <strong>faking your browser into thinking it's legitimate</strong>.</p>
+<p>It's magic!✨</p>
+<h2>Getting set up</h2>
+<p>Installation of the actual utility is pretty straightforward, and the package is available on <strong>Windows, MacOS, and Linux</strong> platforms. I'll go through a brief overview of each, but for more detailed instructions I'd recommend checking out the <a href="https://github.com/FiloSottile/mkcert/blob/master/README.md">README</a> on the official repo.</p>
+<p>Let's get started!</p>
+<p><strong>For MacOS using <a href="https://brew.sh">Homebrew</a>:</strong></p>
+<pre><code class="language-bash">brew install mkcert
+brew install nss # only if you use Firefox</code></pre>
+<p><strong>For Windows using <a href="https://chocolatey.org/">Chocolatey</a>:</strong></p>
+<pre><code class="language-bash">choco install mkcert</code></pre>
+<p><strong>For Linux using <a href="https://docs.brew.sh/Homebrew-on-Linux">Linuxbrew</a>:</strong></p>
+<pre><code class="language-bash">brew install mkcert</code></pre>
+<p>💥 Bam! Now you have the tool installed on your system and ready to use in your terminal.</p>
+<h2>Creating and using a certificate</h2>
+<p>If this is your first time using mkcert, you'll need to run it with the install flag. This only needs to be done once, and it creates the local certificate authority that we talked about earlier.</p>
+<p>Just open up your terminal, and run:</p>
+<pre><code class="language-bash">mkcert -install</code></pre>
+<p>You should see the following appear if everything went successfully:</p>
+<pre><code class="language-bash">Created a new local CA at "/Users/andrew/Library/Application Support/mkcert" 💥
+The local CA is now installed in the system trust store! ⚡️
+The local CA is now installed in the Firefox trust store (requires browser restart)! 🦊</code></pre>
+<p>Now that we have our authority installed, <strong>we can create an actual certificate</strong>. I recommend first navigating in your terminal to your project's directory, maybe even creating a new directory called <code>mkcerts</code> or something similar.</p>
+<p>Then, it's just a matter of running the command:</p>
+<pre><code class="language-bash">mkcert example.test</code></pre>
+<p>Replacing <code>example.test</code> with whatever local domain you're using to display your site on.</p>
+<p>You can also use IP addresses, or even <strong>wildcard subdomains</strong>. Chaining them together in the same call, if you'd like one certificate for multiple different domains on one site:</p>
+<pre><code class="language-bash">mkcert example.test "*.example.test" 127.0.0.1</code></pre>
+<p>And if everything goes well, you should have two new files in the directory you ran that command in, <code>example.test.pem</code> and <code>example.test-key.pem</code>. Let's use them!</p>
+<p>All we have to do is <strong>make them accessible to our Apache or Nginx config files</strong>, and use them like we would an actual certificate from Let's Encrypt or another authority.</p>
+<p>In <strong>Nginx</strong>, alongside a prepared ssl block, that might look like:</p>
+<pre><code class="language-conf">server {
+    listen  443 ssl;
+    server_name  example.test;
+    root  /Users/andrew/Sites/example.test/public;
+    ssl_certificate     /Users/andrew/Sites/example.test/mkcerts/example.test.pem;
+    ssl_certificate_key /Users/andrew/Sites/example.test/mkcerts/example.test-key.pem;
+}</code></pre>
+<p>And in <strong>Apache</strong>:</p>
+<pre><code class="language-conf">&lt;VirtualHost 127.0.0.1:443&gt;
+ServerAdmin webmaster@example.test
+DocumentRoot /Users/andrew/Sites/example.test/public
+ServerName example.test
+SSLEngine on
+SSLCertificateFile /Users/andrew/Sites/example.test/mkcerts/example.test.pem
+SSLCertificateKeyFile /Users/andrew/Sites/example.test/mkcerts/example.test-key.pem
+&lt;/VirtualHost&gt; </code></pre>
+<p>All that's left to do is restart the webserver process, and navigate to your example site with <code>https://</code> in your browser of choice. You should then be presented with a <strong>wonderful green secure badge</strong> in the address bar! ✅</p>
+<h2>That's all folks</h2>
+<p>Hopefully after going through this article and trying out mkcert yourself, you've been converted to the <strong>easier way of creating and using self-signed ssl certificates</strong> to enable https on your development websites.</p>
+<p>If you have any questions about anything covered in the above, concerns or problems getting started with mkcert, or just want to chat about web development topics in general, feel free to reach out to me in the comments or on my <a href="https://twitter.com/aschmelyun">Twitter</a>. </p></div>
+    </div>
+</section>        <footer class="text-gray-600 body-font overflow-hidden mt-12">
+    <div class="flex flex-wrap -mx-4 -mb-10 text-center items-center justify-between">
+        <div class="w-full lg:w-1/2 mb-10 px-4 text-center lg:text-left">
+            <p class="mb-2 font-medium text-gray-900">&copy;2021 Andrew Schmelyun</p>
+            <p>This site is powered by <a href="https://github.com/aschmelyun/cleaver" target="_blank" rel="noreferrer" class="inline-block py-0.5 px-2 rounded bg-white text-gray-600 border border-gray-600 text-xs font-medium tracking-widest hover:bg-gray-600 hover:text-white transition-colors duration-200">CLEAVER 🔥🔪</a></p>
+        </div>
+        <div class="w-full lg:w-1/2 mb-10 px-4 text-center lg:text-right">
+            <p class="mb-2 font-medium text-gray-900">Follow me</p>
+                        <p>
+                                    <a href="https://github.com/aschmelyun" target="_blank" rel="noreferrer" class="text-gray-600 hover:text-gray-900 transition-colors duration-200">GitHub</a>
+                                            &nbsp;&mdash;&nbsp;
+                                                        <a href="https://twitter.com/aschmelyun" target="_blank" rel="noreferrer" class="text-gray-600 hover:text-gray-900 transition-colors duration-200">Twitter</a>
+                                            &nbsp;&mdash;&nbsp;
+                                                        <a href="https://youtube.com/aschmelyun" target="_blank" rel="noreferrer" class="text-gray-600 hover:text-gray-900 transition-colors duration-200">YouTube</a>
+                                            &nbsp;&mdash;&nbsp;
+                                                        <a href="https://dev.to/aschmelyun" target="_blank" rel="noreferrer" class="text-gray-600 hover:text-gray-900 transition-colors duration-200">Dev.to</a>
+                                                </p>
+        </div>
+    </div>
+</footer>
+<script type="text/javascript" src="/assets/js/app.js?id=d67be835fdaca4b02a6f"></script>
+    </div>
+</div>
+</body>
+</html>

@@ -1,7 +1,27 @@
-<footer class="px-6 lg:px-16 mt-8 py-8">
-    <div class="flex flex-wrap justify-between items-center">
-        <p class="text-lg font-semibold mb-4 lg:mb-0">&copy;{{ date('Y') }} Andrew Schmelyun</p>
-        <p class="text-lg text-gray-700 leading-relaxed">Built with <a href="https://usecleaver.com" class="font-semibold text-gray-900 hover:text-red-600 transition-colors duration-200" target="_blank" rel="noreferrer">Cleaver</a>, entire source on <a href="https://github.com/aschmelyun/aschmelyun" class="font-semibold text-gray-900 hover:text-red-600 transition-colors duration-200" target="_blank" rel="noreferrer">GitHub</a>. Here's <a href="/uses" class="font-semibold text-gray-900 hover:text-red-600 transition-colors duration-200">what I use</a>.</a></p>
+<footer class="text-gray-600 body-font overflow-hidden mt-12">
+    <div class="flex flex-wrap -mx-4 -mb-10 text-center items-center justify-between">
+        <div class="w-full lg:w-1/2 mb-10 px-4 text-center lg:text-left">
+            <p class="mb-2 font-medium text-gray-900">&copy;{{ date('Y') }} Andrew Schmelyun</p>
+            <p>This site is powered by <a href="https://github.com/aschmelyun/cleaver" target="_blank" rel="noreferrer" class="inline-block py-0.5 px-2 rounded bg-white text-gray-600 border border-gray-600 text-xs font-medium tracking-widest hover:bg-gray-600 hover:text-white transition-colors duration-200">CLEAVER 🔥🔪</a></p>
+        </div>
+        <div class="w-full lg:w-1/2 mb-10 px-4 text-center lg:text-right">
+            <p class="mb-2 font-medium text-gray-900">Follow me</p>
+            @php
+                $footerLinks = [
+                    "GitHub" => "https://github.com/aschmelyun",
+                    "Twitter" => "https://twitter.com/aschmelyun",
+                    "YouTube" => "https://youtube.com/aschmelyun",
+                    "Dev.to" => "https://dev.to/aschmelyun"
+                ];
+            @endphp
+            <p>
+                @foreach($footerLinks as $name => $link)
+                    <a href="{{ $link }}" target="_blank" rel="noreferrer" class="text-gray-600 hover:text-gray-900 transition-colors duration-200">{{ $name }}</a>
+                    @if($name !== 'Dev.to')
+                        &nbsp;&mdash;&nbsp;
+                    @endif
+                @endforeach
+            </p>
         </div>
     </div>
 </footer>

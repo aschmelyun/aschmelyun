@@ -3,19 +3,17 @@
 namespace Aschmelyun\Cleaver\Compilers;
 
 use Aschmelyun\Cleaver\Engines\FileEngine;
+use Symfony\Component\Finder\SplFileInfo;
 
-class MarkdownCompiler
+class MarkdownCompiler extends Compiler
 {
 
-    public $json;
-    public $file;
-
-    public function __construct(string $file)
+    public function __construct(SplFileInfo $file)
     {
         $this->file = $file;
 
         $this->json = $this->parseMarkdown(
-            file_get_contents(FileEngine::contentDir() . $file)
+            $file->getContents()
         );
 
         $this->json->mix = FileEngine::mixManifestData();
@@ -32,19 +30,27 @@ class MarkdownCompiler
 
         foreach($headers as $header) {
             $headerParts = explode(':', $header, 2);
-            $json->{$headerParts[0]} = trim($headerParts[1]);
+
+            $idx = $headerParts[0];
+            $item = trim($headerParts[1]);
+
+            $json->{$idx} = $item;
+
+            if (
+                (substr($item, 0, 5) === '/data') &&
+                (substr($item, -5, 5) === '.json') &&
+                (file_exists(FileEngine::$resourceDir . $item))
+            ) {
+                $json->{$idx} = json_decode(file_get_contents(FileEngine::$resourceDir . $item));
+            }
+
         }
 
-        $content = explode('---', $markdown, 3);
-        $parsedown = new \Parsedown();
-        $json->content = $parsedown->text(end($content));
+        $body = explode('---', $markdown, 3);
+        $parsedown = new \ParsedownExtra();
+        $json->body = $parsedown->text(end($body));
 
         return $json;
-    }
-
-    public function checkFormatting(): bool
-    {
-        return (isset($this->json->view) && isset($this->json->path));
     }
 
 }

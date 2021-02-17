@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <title>My favorite Laravel helpers and how to use them - Andrew Schmelyun</title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="I go through my top seven Laravel helper functions and show off a few use cases for each of them.">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="My favorite Laravel helpers and how to use them" />
+    <meta property="og:description" content="I go through my top seven Laravel helper functions and show off a few use cases for each of them." />
+    <meta property="og:url" content="https://aschmelyun.com/" />
+    <meta property="og:site_name" content="Andrew Schmelyun" />
+            <meta name="og:image" content="https://aschmelyun.com/assets/images/meta/blog/my-favorite-laravel-helpers-and-how-to-use-them.jpg" />
+    
+    <meta name="twitter:description" content="I go through my top seven Laravel helper functions and show off a few use cases for each of them." />
+    <meta name="twitter:title" content="My favorite Laravel helpers and how to use them" />
+    <meta name="twitter:site" content="@aschmelyun" />
+            <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://aschmelyun.com/assets/images/meta/blog/my-favorite-laravel-helpers-and-how-to-use-them.jpg" />
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
+    <meta name="theme-color" content="#1a202c">
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/app.css?id=904aebe536c8fe3f1747">
+</head><body class="">
+<div class="container mx-auto pb-6 md:pb-12 antialiased">
+    <div class="w-auto mx-4 lg:w-4/5 lg:mx-auto">
+        <header class="text-gray-900 font-semibold">
+    <div class="container mx-auto flex flex-wrap py-4 flex-col md:flex-row items-center">
+        <a href="/" id="link-home" class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0 hover:opacity-75 transition-opacity duration-200">
+            <img src="/assets/images/andrew-schmelyun-profile.jpg" alt="Andrew Schmelyun profile picture" class="w-24 h-24 rounded-full">
+        </a>
+        <nav class="w-full md:w-auto md:ml-auto flex flex-wrap items-center text-lg justify-around lg:justify-center">
+            <a href="/blog" class="inline-flex bg-white text-gray-900 mr-0 lg:mr-6 hover:bg-gray-200 border-0 py-1 px-3 focus:outline-none transition-colors duration-200">Blog</a>
+            <a href="/videos" class="inline-flex bg-white text-gray-900 mr-0 lg:mr-6 hover:bg-gray-200 border-0 py-1 px-3 focus:outline-none transition-colors duration-200">Videos</a>
+            <a href="/uses" class="inline-flex bg-white text-gray-900 mr-0 lg:mr-6 hover:bg-gray-200 border-0 py-1 px-3 focus:outline-none transition-colors duration-200">Uses</a>
+            <a href="/projects" class="inline-flex bg-white text-gray-900 mr-0 lg:mr-6 hover:bg-gray-200 border-0 py-1 px-3 focus:outline-none transition-colors duration-200">Projects</a>
+        </nav>
+        <a href="mailto:me@aschmelyun.com?subject=Hey Andrew" class="inline-flex items-center bg-gray-200 text-gray-900 border-0 py-1 px-3 focus:outline-none hover:bg-gray-900 hover:text-white font-semibold text-lg mt-4 md:mt-0 transition-colors duration-200">Get In Touch
+            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+                <path d="M5 12h14M12 5l7 7-7 7"></path>
+            </svg>
+        </a>
+    </div>
+</header>        <section class="text-gray-600 body-font overflow-hidden mt-4 lg:mt-16">
+    <h1 class="text-3xl lg:text-4xl text-gray-900 font-medium relative">My favorite Laravel helpers and how to use them</h1>
+    <div class="pt-4 pb-12 w-full flex flex-col items-start">
+        <div class="mb-8 flex items-center">
+            <span class="inline-block mr-4 text-gray-900 font-medium">Published <time datetime="2020-04-12 00:00:00">Apr 12 2020</time></span>
+                            <span class="inline-block py-0.5 px-2 mr-2 rounded bg-white text-gray-600 border border-gray-600 text-xs font-medium tracking-widest tag-laravel">LARAVEL</span>
+                    </div>
+        <div class="leading-relaxed blog-content w-full"><p>As a full-stack PHP developer who works with Laravel on a day-to-day basis, I'm always looking for shortcuts and helpful methods in the framework that I can use to cut down on development time or code complexity.</p>
+<p>I've compiled the following list of my current favorite helper methods that I use on a fairly regular basis. As of the writing of this article these are all available in Laravel 7, with some having been around a bit longer than that (so be sure to check against your app's version).</p>
+<p>Let's dive in! ✨</p>
+<h3>Str::limit()</h3>
+<p>Our first helper <strong>takes a string and truncates it down to a set character limit</strong>. There are two required parameters: the string that you want to truncate, as well as the character limit of the returned truncated string.</p>
+<pre><code class="language-php">use Illuminate\Support\Str;
+
+$truncated = Str::limit('The quick brown fox jumps over the lazy dog', 20);
+
+// The quick brown fox ...</code></pre>
+<p>You can also pass in a third optional argument to control what is displayed after the string is returned.</p>
+<pre><code class="language-php">use Illuminate\Support\Str;
+
+$truncated = Str::limit('The quick brown fox jumps over the lazy dog', 20, '[...]');
+
+// The quick brown fox [...]</code></pre>
+<p>I've found this is perfect for shortening large blocks of text into something like an excerpt or post preview on an articles list.</p>
+<h3>head()</h3>
+<p>This one is what makes this helpers fantastic. A simple method that's usually comprised of a couple nested vanilla PHP functions, head <strong>returns back the first element of an array</strong>. I've used it in a ton of different applications because of its global and ubiquitous nature.</p>
+<pre><code class="language-php">$array = [100, 200, 300];
+
+$first = head($array);
+
+// 100</code></pre>
+<p>Want the inverse of that? Use the <code>last</code> method to grab, well, the last element of an array.</p>
+<pre><code class="language-php">$array = [100, 200, 300];
+
+$last = last($array);
+
+// 300</code></pre>
+<p>The best part about using the head and last methods, they don't affect the original array at all.</p>
+<h3>Str::between()</h3>
+<p>Another pretty self-explanatory method, the Str::between helper <strong>returns back a string between two other strings</strong>. If no string can be found with the start and end strings that you provided, <code>null</code> is returned.</p>
+<pre><code class="language-php">use Illuminate\Support\Str;
+
+$slice = Str::between('My name is Inigo Montoya.', 'My name is ', '.');
+
+// 'Inigo Montoya'</code></pre>
+<p>I love using this method to grab information between parentheses and brackets, return specific segments of URLs, or even parse out data between HTML tags.</p>
+<h3>blank()</h3>
+<p>This helper is best explained as <strong>empty, but better</strong>. It returns a simple boolean true/false value depending on whether or not what was passed in contains any real data.</p>
+<pre><code class="language-php">// all of these return true
+blank('');
+blank('   ');
+blank(null);
+blank(collect());
+
+// all of these return false
+blank(true);
+blank(false);
+blank(0);</code></pre>
+<p>I've found the blank method particularly helpful in combination with request data validation, or weeding through API data that might not be formatted properly. It's a little nicer than using something like <code>empty(trim())</code>.</p>
+<h3>Str::contains()</h3>
+<p>The helper method all of us have been waiting for, <strong>determining if a string contains another string</strong>. This question has been asked <em>so</em> many times on <a href="https://stackoverflow.com/questions/4366730/how-do-i-check-if-a-string-contains-a-specific-word">StackOverflow</a> and other programming forums, with the current best practice in vanilla PHP using <code>strpos</code>.</p>
+<pre><code class="language-php">use Illuminate\Support\Str;
+
+$contains = Str::contains('My name is Inigo Montoya.', 'Inigo');
+
+// true
+
+$contains = Str::contains('My name is Inigo Montoya.', 'Andrew');
+
+// false</code></pre>
+<p>With the approval of a recent rfc, PHP will have its own str_contains method soon that will render this obsolete. Until then though, it's one of the most useful helper methods in Laravel.</p>
+<h3>Arr::pluck()</h3>
+<p>Arguably one of the more powerful methods I've listed off in this article, Arr::pluck lets you <strong>walk through a nested array and return an array of values based on their keys</strong>.</p>
+<p>Let's check out a brief example:</p>
+<pre><code class="language-php">use Illuminate\Support\Arr;
+
+$array = [
+    ['website' =&gt; ['id' =&gt; 1, 'url' =&gt; 'reddit.com']],
+    ['website' =&gt; ['id' =&gt; 2, 'url' =&gt; 'twitter.com']],
+    ['website' =&gt; ['id' =&gt; 3, 'url' =&gt; 'dev.to']],
+];
+
+$names = Arr::pluck($array, 'website.url');
+
+// ['reddit.com', 'twitter.com', 'dev.to']</code></pre>
+<p>Passing in an array and a dot-notation string to determine what key values we want, the multi-dimensional array is walked and a single flat array of the key's values are returned back to us.</p>
+<p>I've used this multiple times in returned API data (when I don't feel the need to use a full collection). It makes getting something like an array of IDs, names, or other attributes insanely easy without having to create a whole foreach loop.</p>
+<h3>collect()</h3>
+<p>Once I found out about collections, I haven't stopped using them. This is probably the helper I find myself reaching for most often, and it lets you <strong>transform an array into a <a href="https://laravel.com/docs/7.x/collections">Collection</a></strong>.</p>
+<p>Why is this important? Because collections are like arrays on steroids. They come with a massive <a href="https://laravel.com/docs/7.x/collections#available-methods">library of methods</a> that you can chain together to perform all sorts of filtering, sorting, and modifying on an array with simple closure arguments. No foreach loops, no intermediary variables, just clean code.</p>
+<p>Check out this quick example:</p>
+<pre><code class="language-php">$collection = collect(['Keys', 'Krates']);
+
+return $collection-&gt;map(function ($value) {
+    return Str::upper($value);
+});
+
+// ['KEYS', 'KRATES']
+
+return $collection-&gt;filter(function ($value) {
+    return strlen($value) &gt; 4;
+});
+
+// ['Krates']</code></pre>
+<p>This is honestly just the tip of the iceberg with what collections can do. I've used them all over my projects, especially when I'm dealing with large and intricate data sets that aren't coming from my database models. CSV data, external API requests, and directory structures can all benefit from being put into a collection.</p>
+<p><strong>That's all I have for now!</strong></p>
+<p>If you have any suggestions for what should have been on this list, or I've made you discover your new favorite Laravel helper, I'd love to hear about it. Feel free to send me a message on <a href="https://twitter.com/aschmelyun">Twitter</a>, or leave a comment below!</p></div>
+    </div>
+</section>        <footer class="text-gray-600 body-font overflow-hidden mt-12">
+    <div class="flex flex-wrap -mx-4 -mb-10 text-center items-center justify-between">
+        <div class="w-full lg:w-1/2 mb-10 px-4 text-center lg:text-left">
+            <p class="mb-2 font-medium text-gray-900">&copy;2021 Andrew Schmelyun</p>
+            <p>This site is powered by <a href="https://github.com/aschmelyun/cleaver" target="_blank" rel="noreferrer" class="inline-block py-0.5 px-2 rounded bg-white text-gray-600 border border-gray-600 text-xs font-medium tracking-widest hover:bg-gray-600 hover:text-white transition-colors duration-200">CLEAVER 🔥🔪</a></p>
+        </div>
+        <div class="w-full lg:w-1/2 mb-10 px-4 text-center lg:text-right">
+            <p class="mb-2 font-medium text-gray-900">Follow me</p>
+                        <p>
+                                    <a href="https://github.com/aschmelyun" target="_blank" rel="noreferrer" class="text-gray-600 hover:text-gray-900 transition-colors duration-200">GitHub</a>
+                                            &nbsp;&mdash;&nbsp;
+                                                        <a href="https://twitter.com/aschmelyun" target="_blank" rel="noreferrer" class="text-gray-600 hover:text-gray-900 transition-colors duration-200">Twitter</a>
+                                            &nbsp;&mdash;&nbsp;
+                                                        <a href="https://youtube.com/aschmelyun" target="_blank" rel="noreferrer" class="text-gray-600 hover:text-gray-900 transition-colors duration-200">YouTube</a>
+                                            &nbsp;&mdash;&nbsp;
+                                                        <a href="https://dev.to/aschmelyun" target="_blank" rel="noreferrer" class="text-gray-600 hover:text-gray-900 transition-colors duration-200">Dev.to</a>
+                                                </p>
+        </div>
+    </div>
+</footer>
+<script type="text/javascript" src="/assets/js/app.js?id=d67be835fdaca4b02a6f"></script>
+    </div>
+</div>
+</body>
+</html>

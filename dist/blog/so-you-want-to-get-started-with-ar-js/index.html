@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <title>So you want to get started with AR.js - Andrew Schmelyun</title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Augmented reality directly on a mobile browser seems pretty far-fetched, but it&#039;s easy to add with the AR.js library!">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="So you want to get started with AR.js" />
+    <meta property="og:description" content="Augmented reality directly on a mobile browser seems pretty far-fetched, but it&#039;s easy to add with the AR.js library!" />
+    <meta property="og:url" content="https://aschmelyun.com/" />
+    <meta property="og:site_name" content="Andrew Schmelyun" />
+            <meta name="og:image" content="https://aschmelyun.com/assets/images/meta/blog/so-you-want-to-get-started-with-ar-js.jpg" />
+    
+    <meta name="twitter:description" content="Augmented reality directly on a mobile browser seems pretty far-fetched, but it&#039;s easy to add with the AR.js library!" />
+    <meta name="twitter:title" content="So you want to get started with AR.js" />
+    <meta name="twitter:site" content="@aschmelyun" />
+            <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://aschmelyun.com/assets/images/meta/blog/so-you-want-to-get-started-with-ar-js.jpg" />
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
+    <meta name="theme-color" content="#1a202c">
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/app.css?id=904aebe536c8fe3f1747">
+</head><body class="">
+<div class="container mx-auto pb-6 md:pb-12 antialiased">
+    <div class="w-auto mx-4 lg:w-4/5 lg:mx-auto">
+        <header class="text-gray-900 font-semibold">
+    <div class="container mx-auto flex flex-wrap py-4 flex-col md:flex-row items-center">
+        <a href="/" id="link-home" class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0 hover:opacity-75 transition-opacity duration-200">
+            <img src="/assets/images/andrew-schmelyun-profile.jpg" alt="Andrew Schmelyun profile picture" class="w-24 h-24 rounded-full">
+        </a>
+        <nav class="w-full md:w-auto md:ml-auto flex flex-wrap items-center text-lg justify-around lg:justify-center">
+            <a href="/blog" class="inline-flex bg-white text-gray-900 mr-0 lg:mr-6 hover:bg-gray-200 border-0 py-1 px-3 focus:outline-none transition-colors duration-200">Blog</a>
+            <a href="/videos" class="inline-flex bg-white text-gray-900 mr-0 lg:mr-6 hover:bg-gray-200 border-0 py-1 px-3 focus:outline-none transition-colors duration-200">Videos</a>
+            <a href="/uses" class="inline-flex bg-white text-gray-900 mr-0 lg:mr-6 hover:bg-gray-200 border-0 py-1 px-3 focus:outline-none transition-colors duration-200">Uses</a>
+            <a href="/projects" class="inline-flex bg-white text-gray-900 mr-0 lg:mr-6 hover:bg-gray-200 border-0 py-1 px-3 focus:outline-none transition-colors duration-200">Projects</a>
+        </nav>
+        <a href="mailto:me@aschmelyun.com?subject=Hey Andrew" class="inline-flex items-center bg-gray-200 text-gray-900 border-0 py-1 px-3 focus:outline-none hover:bg-gray-900 hover:text-white font-semibold text-lg mt-4 md:mt-0 transition-colors duration-200">Get In Touch
+            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+                <path d="M5 12h14M12 5l7 7-7 7"></path>
+            </svg>
+        </a>
+    </div>
+</header>        <section class="text-gray-600 body-font overflow-hidden mt-4 lg:mt-16">
+    <h1 class="text-3xl lg:text-4xl text-gray-900 font-medium relative">So you want to get started with AR.js</h1>
+    <div class="pt-4 pb-12 w-full flex flex-col items-start">
+        <div class="mb-8 flex items-center">
+            <span class="inline-block mr-4 text-gray-900 font-medium">Published <time datetime="2019-05-29 00:00:00">May 29 2019</time></span>
+                            <span class="inline-block py-0.5 px-2 mr-2 rounded bg-white text-gray-600 border border-gray-600 text-xs font-medium tracking-widest tag-javascript">JAVASCRIPT</span>
+                    </div>
+        <div class="leading-relaxed blog-content w-full"><p>Augmented Reality seems like it’s everywhere. Between Snapchat filters, Google stickers, IKEA’s furniture preview, and now Shopify’s <a href="https://medium.com/shopify-vr/ar-shopping-gets-simpler-with-ar-quick-look-on-shopify-c2716593823f">AR Quick Look</a> feature, putting 3D objects in the physical world seems to be more desirable than ever.</p>
+<p>While an augmented reality feature might fit nicely into an established native application, there’s a downside to those non-app-based businesses who’d like to use AR for marketing purposes. For instance, say a handbag company wants to display a 3D model of a handbag above the box it ships in when the user points their camera at their logo on the box. Traditionally, they’d have to:</p>
+<ul>
+<li>Develop a native application using ARKit/ARCore/ARToolkit/etc</li>
+<li>Pay the requested fees to get it distributed to the Google Play/App Stores</li>
+<li>Wait for approval from either of the above stores</li>
+<li>Market the application to your prospective customers/users</li>
+<li>Hope that the user downloads and then uses the app</li>
+</ul>
+<p>All of this for what amounts to (on average) a 2–5 minute session playing around with the finished app. Additionally if it’s for a specific marketing campaign or time span, they’re more than likely not going to interact with it more than a few times.</p>
+<p>The solution? <strong><a href="https://github.com/jeromeetienne/AR.js/blob/master/README.md">AR.js</a></strong>, simple augmented reality directly in the browser and compatible with all modern mobile devices. Now, let’s get started!</p>
+<h2>What is AR.js?</h2>
+<p>To boil it down, it’s essentially a Javascript framework acting as a port of ARToolkit, while leveraging other packages like <a href="https://aframe.io/">a-frame</a> and <a href="https://threejs.org/">three.js</a>. The goal being augmented reality features directly on web browsers without sacrificing performance.</p>
+<p>As far as compatibility goes, it works on any browser capable of WebGL + WebRTC. At the publishing time of this article, that would be Chrome, Firefox, Edge, and Safari. However, the current version of Chrome for iOS is <strong>not</strong> supported as of yet.</p>
+<h2>Getting a project set up</h2>
+<p>This assumes that you have a (local or otherwise) development environment already set up and secured with an SSL certificate. <strong>Why SSL?</strong> <em>Chrome requires all sites that use scripts calling for camera access to be delivered strictly over https.</em></p>
+<p>Following from <a href="https://medium.com/@AndraConnect?source=post_header_lockup">Alexandra Etienne’s</a> article we can have a working demo of AR.js up in just 8 lines of HTML.</p>
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*9JPgSiBdvtWyx9ELbLZ2ew.png" alt="Screenshot of a simple AR.js code demo" /></p>
+<p>Throw that bad boy into an index.html file on your dev environment and open it up in your compatible browser of choice. You’ll get a request to access your camera, and on approval will see a live video feed from your device. Print out/load up the <a href="https://github.com/jeromeetienne/AR.js/blob/master/data/images/hiro.png">default hiro marker image</a> and point it at the video feed. If everything went well, you should see a semi-clear white cube fixed over the marker.</p>
+<p>Augmented reality, <strong>on the web!</strong></p>
+<p>Want to remove the debug boxes from the video display? Simply add the flag ‘debugUIEnabled: false;’ to the arjs prop in the <code>a-scene</code> element.</p>
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*Sxab5E4oSareaJ2i87NLmQ.png" alt="Screenshot of disabling the debugUI in AR.js" /></p>
+<h2>Using custom markers</h2>
+<p>This was honestly one of the most difficult pieces for me to get working properly when I was originally learning AR.js. There’s a few tutorials out there about how to get custom markers working, but between them there’s some conflicting information. I’m going to give the run-down of what worked best for me, broken down step by step.</p>
+<p><strong>Step 1. Decide on your marker image.</strong> For the best results this should be a simple, high-contrast, PNG image pre-cropped to be a square with a size of at least 512x512. This also has to be <strong>rotationally asymmetrical</strong>, meaning that it will always look unique regardless of the degree it’s rotated to. Here’s some good examples of marker images:</p>
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*zUxIO_eUSMyDg4Nq0FPY1g.png" alt="Example marker images for AR.js" /></p>
+<p><strong>Step 2. Convert your image to a .patt file and an AR.js marker.</strong> Using <a href="https://jeromeetienne.github.io/AR.js/three.js/examples/marker-training/examples/generator.html">this marker trainer</a>, upload an image that you’d like to use as a marker. If it looks good to you, then go ahead and click:</p>
+<ul>
+<li><code>Download Marker:</code> The .patt file AR.js uses to recognize the marker and display your 3D content.</li>
+<li><code>Download Image:</code> The actual .png image with the appropriate black border to be used as the physical marker.</li>
+</ul>
+<p><strong>Step 3. Add the .patt file to your website.</strong> It really doesn’t matter where as long as it’s accessible to the application, I usually put mine in my assets folder using a structure like <code>/img/patterns/my-marker.patt</code>.</p>
+<p><strong>Step 4. Add the marker to your AR.js element.</strong> Using the a-frame method, this is very simple. All you need to do is add an <code>a-marker</code> element with a type prop of ‘pattern’, and the relative path to your pattern file as the ‘url’ prop.</p>
+<p>Using this method we will also need to include an <code>a-entity camera</code> so that the virtual camera is included in the 3D environment being rendered.</p>
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*cyOLiJDEH0qlLOKOZJXaQw.png" alt="Screenshot of adding in a custom marker in AR.js" /></p>
+<p>**Step 5. Finally, add in the 3D model you would like to display. To complete this, we need to add in a model that’ll be shown when this marker is discovered. Thankfully, a-frame includes a bunch of primitive geometries that we can easily drop-in using some simple element names.</p>
+<ul>
+<li><code>&lt;a-box&gt;&lt;/a-box&gt;</code></li>
+<li><code>&lt;a-sphere&gt;&lt;/a-sphere&gt;</code></li>
+<li><code>&lt;a-cylinder&gt;&lt;/a-cylinder&gt;</code></li>
+<li><code>&lt;a-plane&gt;&lt;/a-plane&gt;</code></li>
+</ul>
+<p>Each of these have a position prop that can be adjusted to allow you to move it around the 3D space relative to the marker position. This way your objects don’t need to sit directly on the marker but can float above it, or off to the side. For this example, I’m going to add in a red sphere that floats just slightly above the marker.</p>
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*zSw6QgOr9Ok7wYaTFlSuSQ.png" alt="Adding a custom 3D model with custom marker to an AR.js app" /></p>
+<p><strong>Boom</strong> 💥</p>
+<p>Replace the previous boilerplate with the new custom pattern code, and show your downloaded marker image to the camera. You should see a red sphere floating just above the marker icon!</p>
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*sVsjfTeLUND_hwEFx-JAOw.png" alt="Demo of a red sphere hovering above the Hiro marker using AR.js" /></p>
+<p>This might seem pretty simple, but when you consider that we did this in just a dozen lines of HTML the power and possibility of using AR.js really shines through.</p>
+<p><strong>You can stop here if your goal was to just learn about the fundamentals.</strong>
+From here on out I'm going to show you a little more advanced tips + tricks for customizing AR.js to work within a variety of needs.</p>
+<h2>Shrink the size of the black marker border</h2>
+<p>Personally I think that the default border thickness is a little jarring to see on markers, and I’ve heard the same thing parroted by a few other people using AR.js. However, if you’re using the latest version of the framework, it’s easier than ever to adjust the border size to your preference!</p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*UjR6nsfKSoAChKN3lJzncw.png" alt="Difference in border thickness for AR.js markers" /></p>
+<p>Which looks better? Left: 0.5, Right: 0.8</p>
+<p>I discussed during the last article about how to generate markers and their images using the <a href="https://jeromeetienne.github.io/AR.js/three.js/examples/marker-training/examples/generator.html">AR.js Marker Training tool</a>. If you visit the link, you’ll see that in the top-left corner there’s a little slider for <strong>Pattern Ratio</strong> (hint: that’s the black border thickness). You can think of it as ‘Percentage of the marker taken up by the actual marker image’. So for instance, if the Pattern Ratio is set to 0.75 (my preferred value), that means that 75% of the marker is your image in the center, and the remaining 25% is taken up by the black border.</p>
+<p>Once you’ve nailed down where you want your pattern ratio to be, generate and save both your marker pattern and marker image for your app as detailed previously in this article. Back in your app, all it takes is one small adjustment to tie this in. On your <a-scene> element, add in <code>patternRatio=0.75</code> (or whatever your desired value is) to the <strong>arjs</strong> prop.</p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*ctvKA6qOh08YFP2zAT7AdA.png" alt="Screenshot of custom pattern ratio for an AR.js marker" /></p>
+<h2>Use your own 3D models</h2>
+<p>Sure cubes, spheres, planes, and cylinders are cool, but most of the time you’re going to want to utilize and display a custom 3D model in the augmented reality scene you’re creating. Luckily AR.js makes that a pretty simple endeavor!</p>
+<p>The easiest way to get started with this, would be to make sure your models are either in <strong>obj</strong> or <strong>glTF</strong> formats. These work natively with AR.js and a-frame, requiring zero additional setup or configuration to get started. You can find a huge repository of free and affordable obj models on <a href="https://sketchfab.com">https://sketchfab.com</a>.</p>
+<p><strong>Note:</strong> In the following examples you’ll see the <code>&lt;a-entity&gt;</code> tag, this is a generic replacement for <code>&lt;a-sphere&gt;</code> and the like, allowing you to specify your own geometries/materials/etc instead of using prefabbed ones.</p>
+<h3>For obj models:</h3>
+<p>Inside of our a-entity tag, we’ll be using the <code>obj-model</code> prop, which will require you to specify paths to both the <strong>.obj</strong> model file and the accompanying <strong>.mtl</strong> material file. The end result should look like this:</p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*62s3moLx4zQyoudEb66Kkw.png" alt="Screenshot of an obj model in AR.js" /></p>
+<h3>For glTF models:</h3>
+<p>This one’s even easier, because it’s just one path! Swap out the obj-model prop for <code>gtlf-model</code> and supply the path to your model as the value:</p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*xuE0S9Qjds07I0tTPaKkOQ.png" alt="Screenshot of a glTF model in AR.js" /></p>
+<h2>Create an event listener for the markers</h2>
+<p>Why would we want an event listener in the first place? I can give you a real-world example: My client wanted to display a simple block of content whenever a marker was active on a user’s device. The content was supposed to disappear whenever there was not a marker currently active. In order to implement this we needed to add in an event listener that would fire whenever a marker was found/lost, and then we’d hook into that in our main site’s JavaScript bundle and display/hide the content whenever that event was fired.</p>
+<p>To implement the event listeners you’ll just register an aframe component and then set the event listeners for markerFound and markerLost. Inside their respective callback functions, write any JS you want that’ll be fired when a marker is found or lost:</p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*DDBk985LRyE8G_9blxnoCg.png" alt="Screenshot of implemented event listeners for markers in AR.js" /></p>
+<p><strong>That’s all for now!</strong> If you have any questions/comments on this article or anything AR.js related, feel free to drop me a line on <a href="https://twitter.com/aschmelyun">Twitter</a> 🐦.</p></div>
+    </div>
+</section>        <footer class="text-gray-600 body-font overflow-hidden mt-12">
+    <div class="flex flex-wrap -mx-4 -mb-10 text-center items-center justify-between">
+        <div class="w-full lg:w-1/2 mb-10 px-4 text-center lg:text-left">
+            <p class="mb-2 font-medium text-gray-900">&copy;2021 Andrew Schmelyun</p>
+            <p>This site is powered by <a href="https://github.com/aschmelyun/cleaver" target="_blank" rel="noreferrer" class="inline-block py-0.5 px-2 rounded bg-white text-gray-600 border border-gray-600 text-xs font-medium tracking-widest hover:bg-gray-600 hover:text-white transition-colors duration-200">CLEAVER 🔥🔪</a></p>
+        </div>
+        <div class="w-full lg:w-1/2 mb-10 px-4 text-center lg:text-right">
+            <p class="mb-2 font-medium text-gray-900">Follow me</p>
+                        <p>
+                                    <a href="https://github.com/aschmelyun" target="_blank" rel="noreferrer" class="text-gray-600 hover:text-gray-900 transition-colors duration-200">GitHub</a>
+                                            &nbsp;&mdash;&nbsp;
+                                                        <a href="https://twitter.com/aschmelyun" target="_blank" rel="noreferrer" class="text-gray-600 hover:text-gray-900 transition-colors duration-200">Twitter</a>
+                                            &nbsp;&mdash;&nbsp;
+                                                        <a href="https://youtube.com/aschmelyun" target="_blank" rel="noreferrer" class="text-gray-600 hover:text-gray-900 transition-colors duration-200">YouTube</a>
+                                            &nbsp;&mdash;&nbsp;
+                                                        <a href="https://dev.to/aschmelyun" target="_blank" rel="noreferrer" class="text-gray-600 hover:text-gray-900 transition-colors duration-200">Dev.to</a>
+                                                </p>
+        </div>
+    </div>
+</footer>
+<script type="text/javascript" src="/assets/js/app.js?id=d67be835fdaca4b02a6f"></script>
+    </div>
+</div>
+</body>
+</html>

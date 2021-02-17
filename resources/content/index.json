@@ -1,6 +1,7 @@
 {
-    "view": "pages.index",
+    "view": "layout.home",
     "path": "/",
-    "title": "Andrew Schmelyun",
-    "description": "A full-stack PHP developer with a passion for Laravel, Vue, and Docker. He writes articles and produces videos on those and other web development topics."
+    "title": "Home",
+    "description": "A full-stack PHP developer with a love for Laravel, Vue, and Docker.",
+    "videos": "/data/videos.json"
 }

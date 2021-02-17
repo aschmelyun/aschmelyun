@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <title>5 tips for supercharged Laravel Eloquent queries - Andrew Schmelyun</title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Enhance and optimize your Laravel Eloquent queries with these helpful hints, saving time and cleaning up your code in the process.">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="5 tips for supercharged Laravel Eloquent queries" />
+    <meta property="og:description" content="Enhance and optimize your Laravel Eloquent queries with these helpful hints, saving time and cleaning up your code in the process." />
+    <meta property="og:url" content="https://aschmelyun.com/" />
+    <meta property="og:site_name" content="Andrew Schmelyun" />
+            <meta name="og:image" content="https://aschmelyun.com/assets/images/meta/blog/5-tips-for-supercharged-laravel-eloquent-queries.jpg" />
+    
+    <meta name="twitter:description" content="Enhance and optimize your Laravel Eloquent queries with these helpful hints, saving time and cleaning up your code in the process." />
+    <meta name="twitter:title" content="5 tips for supercharged Laravel Eloquent queries" />
+    <meta name="twitter:site" content="@aschmelyun" />
+            <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://aschmelyun.com/assets/images/meta/blog/5-tips-for-supercharged-laravel-eloquent-queries.jpg" />
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
+    <meta name="theme-color" content="#1a202c">
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/app.css?id=904aebe536c8fe3f1747">
+</head><body class="">
+<div class="container mx-auto pb-6 md:pb-12 antialiased">
+    <div class="w-auto mx-4 lg:w-4/5 lg:mx-auto">
+        <header class="text-gray-900 font-semibold">
+    <div class="container mx-auto flex flex-wrap py-4 flex-col md:flex-row items-center">
+        <a href="/" id="link-home" class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0 hover:opacity-75 transition-opacity duration-200">
+            <img src="/assets/images/andrew-schmelyun-profile.jpg" alt="Andrew Schmelyun profile picture" class="w-24 h-24 rounded-full">
+        </a>
+        <nav class="w-full md:w-auto md:ml-auto flex flex-wrap items-center text-lg justify-around lg:justify-center">
+            <a href="/blog" class="inline-flex bg-white text-gray-900 mr-0 lg:mr-6 hover:bg-gray-200 border-0 py-1 px-3 focus:outline-none transition-colors duration-200">Blog</a>
+            <a href="/videos" class="inline-flex bg-white text-gray-900 mr-0 lg:mr-6 hover:bg-gray-200 border-0 py-1 px-3 focus:outline-none transition-colors duration-200">Videos</a>
+            <a href="/uses" class="inline-flex bg-white text-gray-900 mr-0 lg:mr-6 hover:bg-gray-200 border-0 py-1 px-3 focus:outline-none transition-colors duration-200">Uses</a>
+            <a href="/projects" class="inline-flex bg-white text-gray-900 mr-0 lg:mr-6 hover:bg-gray-200 border-0 py-1 px-3 focus:outline-none transition-colors duration-200">Projects</a>
+        </nav>
+        <a href="mailto:me@aschmelyun.com?subject=Hey Andrew" class="inline-flex items-center bg-gray-200 text-gray-900 border-0 py-1 px-3 focus:outline-none hover:bg-gray-900 hover:text-white font-semibold text-lg mt-4 md:mt-0 transition-colors duration-200">Get In Touch
+            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+                <path d="M5 12h14M12 5l7 7-7 7"></path>
+            </svg>
+        </a>
+    </div>
+</header>        <section class="text-gray-600 body-font overflow-hidden mt-4 lg:mt-16">
+    <h1 class="text-3xl lg:text-4xl text-gray-900 font-medium relative">5 tips for supercharged Laravel Eloquent queries</h1>
+    <div class="pt-4 pb-12 w-full flex flex-col items-start">
+        <div class="mb-8 flex items-center">
+            <span class="inline-block mr-4 text-gray-900 font-medium">Published <time datetime="2020-07-03 00:00:00">Jul 3 2020</time></span>
+                            <span class="inline-block py-0.5 px-2 mr-2 rounded bg-white text-gray-600 border border-gray-600 text-xs font-medium tracking-widest tag-laravel">LARAVEL</span>
+                    </div>
+        <div class="leading-relaxed blog-content w-full"><p>I've been working with Laravel for the last five years or so, and over that time I've come across a few cases where I needed a unique or atypical way of returning a piece of data from my application. Using Eloquent makes fetching data with Laravel easy, but there's still a few use cases where it took me some digging and understanding to figure out how to do what I was trying to accomplish.</p>
+<p>I've listed out five of these below, along with code examples and dummy data returned for each. This article does anticipate that you're at least a little familiar with Laravel and Eloquent models, and at the time of writing was aimed toward Laravel 7. Although these hints <em>should</em> work for any app using version 5+ of Laravel.</p>
+<p>If you're more of a visual learner, I've <a href="https://www.youtube.com/watch?v=TuPdEbEBvo0">published a video on YouTube</a> following along with these and the examples given.</p>
+<p><em>Ready?</em> <strong>Let's get started!</strong></p>
+<h2>Building a query conditionally</h2>
+<p>Let's say that we have a <strong>Property</strong> model with columns for the rent price and whether or not you're allowed to have pets. And we'd want to filter out data when the user visits our app at <code>example.com/properties?rent=1200&amp;pets=true</code>.</p>
+<p>Filtering out properties by returning from each conditional (or combination of them) could get complex fast, the more filters that you add into it:</p>
+<pre><code class="language-php">public function test(Request $request)
+{
+    if ($request-&gt;get('rent') &amp;&amp; $request-&gt;get('pets')) {
+        return Property::where('rent', &lt;=, $request-&gt;get('rent'))-&gt;where('pets_allowed', true))-&gt;get();
+    }
+
+    if ($request-&gt;get('rent')) {
+        return Property::where('rent', &lt;=, $request-&gt;get('rent'))-&gt;get();
+    }
+
+    if ($request-&gt;get('pets')) {
+        return Property::where('pets_allowed', true))-&gt;get();
+    }
+
+    return Property::all();
+}</code></pre>
+<p>Instead, we can build up a query and then add onto it based on those conditionals (instead of relying on them). Using <strong>Model::query()</strong> to open up what's essentially an Eloquent query placeholder, we can then chain on <strong>where()</strong> statements based on what filters are present. A final <strong>get()</strong> call returns our data:</p>
+<pre><code class="language-php">public function test(Request $request)
+{
+    $properties = Property::query();
+
+    if ($request-&gt;get('rent')) {
+        $properties-&gt;where('rent', &lt;=, $request-&gt;get('rent'));
+    }
+
+    if ($request-&gt;get('pets')) {
+        $properties-&gt;where('pets_allowed', true));
+    }
+
+    return $properties-&gt;get();
+}</code></pre>
+<p>This ensures that each filter only needs one conditional statement, and that combinations of filters are chained on to this query automatically.</p>
+<h2>Returning the latest relationship</h2>
+<p>Using our previous <strong>Property</strong> model as an example, let's say that there's multiple <strong>Tenant</strong> models associated with each in a <code>hasMany()</code> relationship. To pull in all of the properties with their attached tenants, you'd probably use something like:</p>
+<pre><code class="language-php">public function test(Request $request)
+{
+    return Property::with('tenants')-&gt;get();
+}</code></pre>
+<p>But what if you wanted to only return one tenant? Say, the one who's lease expires the furthest away from today. You could run a nested query on the <code>with</code> statement above, but if you tried to limit it by 1 it wouldn't return any values as expected.</p>
+<p>Instead, in Laravel, you can create a <code>hasOne</code> relationship on the same class that a one-to-many exists on. Chaining any other conditions you want onto it, it'll just return a single attached model.</p>
+<p>So, the relationships in our <strong>Property</strong> model now look something like:</p>
+<pre><code class="language-php">public function tenants()
+{
+    return $this-&gt;hasMany(Tenant::class);
+}
+
+public function newestTenant()
+{
+    return $this-&gt;hasOne(Tenant::class)-&gt;orderBy('lease_expires_at', 'desc');
+}</code></pre>
+<p>Now, if we go back to our previous test method and modify it to use <code>Property::with('newestTenant')</code>, we'll get back just a single tenant, and the one whose lease expires at the date furthest from today.</p>
+<h2>Filtering items by nested values</h2>
+<p>Using our <strong>Property</strong> and <strong>Tenant</strong> models and relationship from earlier, what if you wanted to only return those properties whose tenants don't have dogs or cats? You might be able to use something like this:</p>
+<pre><code class="language-php">public function test(Request $request)
+{
+    return Property::with(['tenants' =&gt; function($query) {
+        $query-&gt;where('has_dogs', false)-&gt;where('has_cats', false);
+    }])-&gt;get();
+}</code></pre>
+<p>Which, will partially work. In our returned data, we'll only see tenants who don't have dogs or cats. But, the problem is that if a property has nothing but tenants with cats and dogs, we're left with an empty array of tenants on the property model.</p>
+<p>What I'd like to do is filter these properties out and just return the ones that contain those filtered relationships. We could just run a foreach loop on the objects and check for that empty tenants array, or we could use Eloquent's <code>whereHas()</code> method:</p>
+<pre><code class="language-php">public function test(Request $request)
+{
+    return Property::whereHas('tenants', function($query) {
+        $query-&gt;where('has_dogs', false)-&gt;where('has_cats', false);
+    })-&gt;with(['tenants' =&gt; function($query) {
+        $query-&gt;where('has_dogs', false)-&gt;where('has_cats', false);
+    }])-&gt;get();
+}</code></pre>
+<p>By using <code>whereHas()</code>, the above <em>only</em> returns those properties that match the column entered as the first argument. Our second argument filters that column based on chained methods to the query object. In this case, any tenants that don't have cats and dogs.</p>
+<p>We then follow up by attaching those tenants to the returned properties and get the results.</p>
+<h2>Generating and inserting dynamic attributes</h2>
+<p>For our fourth tip, let's say that we have two new models: <strong>Technicians</strong> and <strong>Requests</strong>. These are paired with each other in a many-to-many relationship, based off of a pivot table.</p>
+<p>As such, a technician shares multiple requests with other technicians. What if we wanted a way to easily see, at a glance in our data, how many requests each technician object has? We could just include each of them as a lazy-load and then get the length of the array, or we could create a dynamic attribute to calculate and hold this value.</p>
+<p>To get started, we'd have to add the following method to the end of our <strong>Technician</strong> model:</p>
+<pre><code class="language-php">public function getRequestsCountAttribute()
+{
+    return $this-&gt;requests()-&gt;count();
+}</code></pre>
+<p>In Laravel, generated assets follow a particular naming convention for their methods:</p>
+<ul>
+<li>Use camelCase</li>
+<li>Start with <code>get</code></li>
+<li>Contain the column name you want next</li>
+<li>End with <code>Attribute</code></li>
+</ul>
+<p>So, the method above will create a dynamic column on our returned technician called <code>requests_count</code>, and it will contain the count of the connected requests attached to our model.</p>
+<h2>Filtering dates the easy way</h2>
+<p>For our fifth and final tip, let's go back to our <strong>Tenant</strong> model. As we mentioned previously, each one has a column to hold when their lease expires. Well, what if we wanted to only return those users whose lease is expiring in July of 2021?</p>
+<p>We might be able to do something like:</p>
+<pre><code class="language-php">public function test(Request $request)
+{
+    return Tenant::where('lease_expires_at', 'LIKE', '2021-07-%')-&gt;get();
+}</code></pre>
+<p>That will work perfectly, and only return back the tenants that we want. But I'm not super keen on using <code>LIKE</code> statements where we don't have to. They can get messy, and Laravel provides us with two better methods:</p>
+<pre><code class="language-php">public function test(Request $request)
+{
+    return Tenant::whereMonth('lease_expires_at', '07')-&gt;whereYear('lease_expires_at', '2021)-&gt;get();
+}</code></pre>
+<p>Using <code>whereMonth</code> and <code>whereYear</code>, we can filter out only those models whose lease expires at the provided combined values, July of 2021. We can even replace those hard-coded values with <code>$request-&gt;get('month')</code> or <code>$request-&gt;get('year')</code> if we wanted to provide some dynamic filtering capabilities.</p>
+<p><strong>That's all for now!</strong></p>
+<p>These are five simple yet powerful methods and organizational tips that you can use to increase your productivity with Laravel's Eloquent ORM. Additionally, this might help get you started about thinking about how to optimize your queries and reduce your overall code clutter.</p>
+<p>If you have any questions about this, or any other web development topics at all, please feel free to reach out to me on <a href="https://twitter.com/aschmelyun">Twitter</a>!</p>
+<p>If you would like a compiled list of web dev tips and tricks sent out to you on a regular basis, consider <a href="https://aschmelyun.substack.com">signing up for my newsletter</a> which gets sent out every other week.</p></div>
+    </div>
+</section>        <footer class="text-gray-600 body-font overflow-hidden mt-12">
+    <div class="flex flex-wrap -mx-4 -mb-10 text-center items-center justify-between">
+        <div class="w-full lg:w-1/2 mb-10 px-4 text-center lg:text-left">
+            <p class="mb-2 font-medium text-gray-900">&copy;2021 Andrew Schmelyun</p>
+            <p>This site is powered by <a href="https://github.com/aschmelyun/cleaver" target="_blank" rel="noreferrer" class="inline-block py-0.5 px-2 rounded bg-white text-gray-600 border border-gray-600 text-xs font-medium tracking-widest hover:bg-gray-600 hover:text-white transition-colors duration-200">CLEAVER 🔥🔪</a></p>
+        </div>
+        <div class="w-full lg:w-1/2 mb-10 px-4 text-center lg:text-right">
+            <p class="mb-2 font-medium text-gray-900">Follow me</p>
+                        <p>
+                                    <a href="https://github.com/aschmelyun" target="_blank" rel="noreferrer" class="text-gray-600 hover:text-gray-900 transition-colors duration-200">GitHub</a>
+                                            &nbsp;&mdash;&nbsp;
+                                                        <a href="https://twitter.com/aschmelyun" target="_blank" rel="noreferrer" class="text-gray-600 hover:text-gray-900 transition-colors duration-200">Twitter</a>
+                                            &nbsp;&mdash;&nbsp;
+                                                        <a href="https://youtube.com/aschmelyun" target="_blank" rel="noreferrer" class="text-gray-600 hover:text-gray-900 transition-colors duration-200">YouTube</a>
+                                            &nbsp;&mdash;&nbsp;
+                                                        <a href="https://dev.to/aschmelyun" target="_blank" rel="noreferrer" class="text-gray-600 hover:text-gray-900 transition-colors duration-200">Dev.to</a>
+                                                </p>
+        </div>
+    </div>
+</footer>
+<script type="text/javascript" src="/assets/js/app.js?id=d67be835fdaca4b02a6f"></script>
+    </div>
+</div>
+</body>
+</html>
