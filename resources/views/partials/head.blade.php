@@ -37,4 +37,13 @@
     <meta name="theme-color" content="#1a202c">
 
     <link rel="stylesheet" type="text/css" href="{{ $mix['/assets/css/app.css'] }}">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-62877530-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-62877530-1');
+    </script>
 </head>
