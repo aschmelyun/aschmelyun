@@ -59,6 +59,13 @@
       @apply text-gray-900 underline transition-colors duration-200;
     }
   }
+  ul {
+    > li {
+      a {
+        @apply text-gray-900 underline transition-colors duration-200;
+      }
+    }
+  }
   img {
     max-width: 100%;
   }
