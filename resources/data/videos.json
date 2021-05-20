@@ -112,5 +112,17 @@
     "id": "p_ZYVObwBXQ",
     "published": "Jan 19 2021",
     "description": "In this 28 minute video, I'll show you how to install and use the Breeze and Jetstream authentication starter kits in a new Laravel application."
+  },
+  {
+    "title": "Build a solid WordPress dev environment with Docker",
+    "id": "kIqWxjDj4IU",
+    "published": "Mar 21 2021",
+    "description": "In this 25 minute video, I'll show you how to create and use a basic WordPress development environment built with Docker and Docker Compose."
+  },
+  {
+    "title": "Getting started with Laravel Passport and OAuth2",
+    "id": "PTFPMAX_88s",
+    "published": "May 11 2021",
+    "description": "In this 29 minute video, I'll show you how to install and use the powerful Passport authentication package in an example Laravel application."
   }
 ]
