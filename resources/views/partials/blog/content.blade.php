@@ -4,7 +4,7 @@
         <div class="mb-8 flex items-center">
             <span class="inline-block mr-4 text-gray-900 font-medium">Published <time datetime="{{ date('Y-m-d H:i:s', strtotime($published)) }}">{{ $published }}</time></span>
             @foreach(explode(',', $categories) as $category)
-                <span class="inline-block py-0.5 px-2 mr-2 rounded bg-white text-gray-600 border border-gray-600 text-xs font-medium tracking-widest tag-{{ strtolower(trim($category)) }}">{{ strtoupper(trim($category)) }}</span>
+                <span class="inline-block py-0.5 px-2 mr-2 rounded bg-white text-gray-700 border border-gray-600 text-xs font-medium tracking-widest tag-{{ strtolower(trim($category)) }}">{{ strtoupper(trim($category)) }}</span>
             @endforeach
         </div>
         <div class="leading-relaxed blog-content w-full">{!! $body !!}</div>
