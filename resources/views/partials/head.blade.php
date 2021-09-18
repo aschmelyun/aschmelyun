@@ -37,6 +37,13 @@
     <meta name="theme-color" content="#1a202c">
 
     <link rel="stylesheet" type="text/css" href="{{ $mix['/assets/css/app.css'] }}">
+
+    @if(isset($headScripts))
+        @foreach($headScripts as $headScript)
+            {!! $headScript !!}
+        @endforeach
+    @endif
+
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-62877530-1"></script>
     <script>
