@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <title>Fixing permissions issues with Docker Compose and PHP - Andrew Schmelyun</title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="My fairly elegant solution to fixing the file_put_contents and RuntimeException errors with local PHP Docker development environments.">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Fixing permissions issues with Docker Compose and PHP" />
+    <meta property="og:description" content="My fairly elegant solution to fixing the file_put_contents and RuntimeException errors with local PHP Docker development environments." />
+    <meta property="og:url" content="https://aschmelyun.com/blog/fixing-permissions-issues-with-docker-compose-and-php" />
+    <meta property="og:site_name" content="Andrew Schmelyun" />
+            <meta name="og:image" content="https://aschmelyun.com/assets/images/meta/blog/fixing-permissions-issues-with-docker-compose-and-php.jpg" />
+    
+    <meta name="twitter:description" content="My fairly elegant solution to fixing the file_put_contents and RuntimeException errors with local PHP Docker development environments." />
+    <meta name="twitter:title" content="Fixing permissions issues with Docker Compose and PHP" />
+    <meta name="twitter:site" content="@aschmelyun" />
+            <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://aschmelyun.com/assets/images/meta/blog/fixing-permissions-issues-with-docker-compose-and-php.jpg" />
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
+    <meta name="theme-color" content="#1a202c">
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/app.css?id=48c1f859937506456544">
+
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-62877530-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-62877530-1');
+    </script>
+</head>
+<body class="">
+<div class="container mx-auto pb-6 md:pb-12 antialiased">
+    <div class="w-auto mx-4 lg:w-4/5 lg:mx-auto">
+        <header class="text-gray-900 font-semibold">
+    <div class="container mx-auto flex flex-wrap py-4 flex-col md:flex-row items-center">
+        <a href="/" id="link-home" class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0 hover:opacity-75 transition-opacity duration-200">
+            <img src="/assets/images/andrew-schmelyun-profile.jpg" alt="Andrew Schmelyun profile picture" class="w-24 h-24 rounded-full">
+        </a>
+        <nav class="w-full md:w-auto md:ml-auto flex flex-wrap items-center text-lg justify-around lg:justify-center">
+            <a href="/blog" class="inline-flex bg-white text-gray-900 mr-0 lg:mr-6 hover:bg-gray-200 border-0 py-1 px-3 focus:outline-none transition-colors duration-200">Blog</a>
+            <a href="/videos" class="inline-flex bg-white text-gray-900 mr-0 lg:mr-6 hover:bg-gray-200 border-0 py-1 px-3 focus:outline-none transition-colors duration-200">Videos</a>
+            <a href="/uses" class="inline-flex bg-white text-gray-900 mr-0 lg:mr-6 hover:bg-gray-200 border-0 py-1 px-3 focus:outline-none transition-colors duration-200">Uses</a>
+            <a href="/projects" class="inline-flex bg-white text-gray-900 mr-0 lg:mr-6 hover:bg-gray-200 border-0 py-1 px-3 focus:outline-none transition-colors duration-200">Projects</a>
+        </nav>
+        <a href="https://aschmelyun.substack.com" class="inline-flex items-center bg-gray-200 text-gray-900 border-0 py-1 px-3 focus:outline-none hover:bg-gray-900 hover:text-white font-semibold text-lg mt-4 md:mt-0 transition-colors duration-200">Newsletter
+            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+                <path d="M5 12h14M12 5l7 7-7 7"></path>
+            </svg>
+        </a>
+    </div>
+</header>
+        <section class="text-gray-600 body-font overflow-hidden mt-4 lg:mt-16">
+    <h1 class="text-3xl lg:text-4xl text-gray-900 font-medium relative">Fixing permissions issues with Docker Compose and PHP</h1>
+    <div class="pt-4 pb-12 w-full flex flex-col items-start">
+        <div class="mb-8 flex items-center">
+            <span class="inline-block mr-4 text-gray-900 font-medium">Published <time datetime="2021-11-29 00:00:00">Nov 29 2021</time></span>
+                            <span class="inline-block py-0.5 px-2 mr-2 rounded bg-white text-gray-700 border border-gray-600 text-xs font-medium tracking-widest tag-docker">DOCKER</span>
+                            <span class="inline-block py-0.5 px-2 mr-2 rounded bg-white text-gray-700 border border-gray-600 text-xs font-medium tracking-widest tag-php">PHP</span>
+                    </div>
+        <div class="leading-relaxed blog-content w-full"><p>I've been maintaining and iterating on a basic <a href="https://github.com/aschmelyun/docker-compose-laravel">Docker Compose setup for Laravel</a> over the last year or so. It's worked <em>well</em> <em>enough</em> for local development, which was what I originally intended it for. Ever since I released it though, I've had multiple people sending me concerns and GitHub issues surrounding permissions problems.</p>
+<p>I've tried multiple different fixes over the course of the repo's lifetime, but only recently have I found a solid solution that seems to work with a variety of common platforms and OS's, both locally and in production.</p>
+<p><strong>So, let's dive into it!</strong></p>
+<h2>The Problem</h2>
+<p>Before we get into the solution, I'm going to give a brief overview of the issues, and what the root  cause is for them. Feel free to <strong>skip this</strong> if you'd like to head straight into the fix!</p>
+<p>Alright, let's move on.</p>
+<p>I'd start by getting my Docker Compose files together, and setting up my Laravel application in the right directory. After spinning up the container network with <code>docker-compose up -d</code>, everything in the terminal would return okay and I didn't see any errors pop up during the build.</p>
+<p>Opening up my browser and visiting the site though, would lead to something like this:</p>
+<p><img src="https://i.stack.imgur.com/1gVDe.png" alt="A screenshot of a Laravel error page that says The stream or file &quot;/var/www/html/vpa/storage/logs/laravel.log&quot; could not be opened in append mode: failed to open stream: Permission denied" /></p>
+<p>I'd also come across a similar error when trying to use any <code>artisan</code> or <code>composer</code> commands in the browser through the Docker container(s). Making this even more frustrating, visiting direct images or compiled assets would return just fine.</p>
+<p>It turns out that the reason this was happening is because the <strong>PHP container didn't have the correct permissions</strong> to write to the filesystem that my Laravel app's files were under. But, <em>why</em>? It shouldn't really make sense considering that Docker containers are closed, isolated systems. </p>
+<p>That's half true, and the big difference lied in how I was bringing the app data into the containers.</p>
+<p>In Docker, there's two main ways of bringing data into a container:</p>
+<p><strong>The first is by using ADD/COPY</strong> commands in Dockerfiles. These take a file or folder contents and copy them to a specified directory in a container at build time. The biggest pro with this is portability, since you don't have to distribute your application's source files, they're all included inside a Docker image. Changes made to any of your application's files though, can't be easily accessed by the local machine for development.</p>
+<p><strong>The second is by using volumes.</strong> Volumes act as a sort of symlink between a local file or folder on your host machine, into a file or folder inside of the container. The biggest pro with this method is that any changes made to those files is reflected on both sides of the volume. This makes it great for development environments where source code is changing rapidly.</p>
+<p>The setup that I linked at the top of the article uses the second method. Docker Compose and mounted volumes bring my site's data and files into the container so that the application can be displayed in a browser. That way, I'm also able to develop an app and make changes to those same files locally, having them reflect in the browser instantaneously. </p>
+<p><strong>But, there's a catch.</strong></p>
+<p>Whenever the volume gets mounted to the container, the file and directory ownership from the <em>host</em> system passes along to the <em>container</em> as well. </p>
+<p>Why is that a problem? Let's say that you're running a Docker instance on your local machine, and your app's files are owned by a user called <strong>andrew</strong> with an ID of 502. Well, the PHP container is running <code>php</code> on a user called <strong>www-data</strong> that has an ID of 1001. When trying to modify files under the application's directory, like writing to the cache or saving an image, the difference in those two ownerships causes a conflict in the permissions and the process errors out.</p>
+<p>The fix seems simple enough. Just ssh into the container and chmod the application files with the correct permissions!</p>
+<p>Except, it's not permanent. If you bring down the containers and spin them back up, the permissions are reset and you'll have to do it again.</p>
+<p>Okay, so let's add a command to the Dockerfile to do it for us, each time that the containers are built!</p>
+<p>Unfortunately, that won't work either. The volumes are mounted <em>after</em> the container build process runs, so no matter what commands you have in the Dockerfile, they won't affect files mounted by volumes in Docker Compose.</p>
+<p>I needed a fix that was reliable, autonomous, and most importantly, replicable.</p>
+<h2>The Fix</h2>
+<p>If I couldn't directly affect the files that were being added into the container, the best thing that I could do would be replicate the permissions that they were using <em>inside</em> of the container.</p>
+<p>For the PHP containers, I'm building them out with a custom Dockerfile that's using the <a href="https://hub.docker.com/_/php?tab=tags&amp;page=1&amp;name=fpm-alpine">php-fpm-alpine</a> image as a base. From there, I'm creating a group called <code>laravel</code> <em>with the same group id as my local machine's group that owns my app's files</em>. <strong>This is important.</strong> I also do the same thing with the user, creating a user called <code>laravel</code>. </p>
+<p>Those commands look like this:</p>
+<pre><code class="language-docker">RUN addgroup -g ${GID} --system laravel
+RUN adduser -G laravel --system -D -s /bin/sh -u ${UID} laravel</code></pre>
+<p>Since this is running off of Alpine Linux, it's a little different than say, Ubuntu. But here's a brief breakdown of what each command does:</p>
+<ul>
+<li><strong>RUN addgroup</strong>
+<ul>
+<li><code>-g</code> pass in a group ID that we want to attach to this new group</li>
+<li><code>${GID}</code> an environment variable for the group ID passed in through Docker Compose (I'll get to this soon)</li>
+<li><code>--system</code> it's a system-wide group</li>
+<li><code>laravel</code> the name of the group we're creating</li>
+</ul></li>
+<li><strong>RUN adduser</strong>
+<ul>
+<li><code>-G</code> the name of the group we want to assign this user to, an in our case it's the group we just created</li>
+<li><code>--system</code> it's a system-wide user</li>
+<li><code>-D</code> don't create a password for this user</li>
+<li><code>-s /bin/sh</code> give it the Alpine Linux shell</li>
+<li><code>-u ${UID}</code> pass in a user ID that we want to attach to this new user, and like the group ID it's coming through an environment variable</li>
+<li><code>laravel</code> the name of the user we're creating</li>
+</ul></li>
+</ul>
+<p>So I created a group and user called laravel, both of them are getting specific IDs, and I attached them to each other. But, I needed to modify the user that PHP is actually running on in the container, since by default it's using <code>www-data</code>. I <em>could</em> copy over a modified php.ini file, but since it's just a few character changes I decided to use a couple of commands in that same Dockerfile:</p>
+<pre><code class="language-docker">RUN sed -i "s/user = www-data/user = laravel/g" /usr/local/etc/php-fpm.d/www.conf
+RUN sed -i "s/group = www-data/group = laravel/g" /usr/local/etc/php-fpm.d/www.conf</code></pre>
+<p>This just uses <strong>sed</strong> to replace two lines that define the user and group PHP runs as, with the user and group we just created, <strong>laravel</strong>. The IDs that we need are the IDs of the app file's owner, so I had to find that out.</p>
+<p>In my terminal I can run <code>id -u</code> and <code>id -g</code> to get both of those, assuming that the current user logged in is who owns the files for the Laravel app I'm working on.</p>
+<p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/vhe0epdc30q0ic9qnc5i.png" alt="Screenshot of iTerm2 with the commands id -u returning 501 and id -g returning 20" /></p>
+<p>Alright, <strong>501</strong> and <strong>20</strong>. </p>
+<p>Back in the PHP Dockerfile, I need to create those environment variables so that when the image is built, it uses those two IDs. At the top, I add this:</p>
+<pre><code class="language-docker">ENV UID=501
+ENV GID=20</code></pre>
+<p>But wait, I don't <em>really</em> want to hard code these values in. Especially since I'm open sourcing this starter kit, there's no telling what group and user ID will be needed!</p>
+<p>We can get around that by using arguments instead, and passing them up to the docker-compose.yml file. So instead of the above, I used this:</p>
+<pre><code class="language-docker">ARG UID
+ARG GID
+
+ENV UID=${UID}
+ENV GID=${GID}</code></pre>
+<p>This might look weird and repetitive, but it's how we can get Dockerfiles being built with Docker Compose to use something called <strong>arguments</strong>. Which, <em>those</em> in turn are used in the <code>docker-compose.yml</code> file like this:</p>
+<pre><code class="language-yaml">php:
+    build:
+      context: .
+      dockerfile: php.dockerfile
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}</code></pre>
+<p>Again, there's more repetition, but it boils down to this: The arguments UID and GID are both using environment variables pulled from the terminal. If a UID or GID isn't found, value for each is set to 1000 (that's what the <code>:-</code> separator means, a default value).</p>
+<p>Okay, so <strong>how does this come together?</strong></p>
+<p>In the terminal, we'll first have to check if those environment variables exist by running <code>echo $UID</code> and <code>echo $GID</code>. If you see values for both, great! If you don't, you'll need to export them by running the following command:</p>
+<pre><code class="language-bash">export UID=$(id -u) &amp;&amp; export GID=$(id -g)</code></pre>
+<p>Then, all you have to do is build and bring up your containers like usual!</p>
+<pre><code class="language-bash">docker-compose up -d --build</code></pre>
+<p>Your PHP container will be built and during that time a laravel group and user will be created with <strong>your user ID and group ID</strong>. The <code>php</code> process will then use the new laravel user to run as, meaning that any write access to the app filesystem should be granted since the defining user attributes for the permissions now match.</p>
+<h2>Wrapping Up</h2>
+<p>Permissions with Docker and PHP are a fairly complex beast. It doesn't help that MacOS doesn't seem to be affected by this, due to the virtualization layer that exists between the native operating system and the Docker software. There's also issues between Windows with and without WSL-2, and Ubuntu. </p>
+<p>I've tested the above in all major operating systems and platforms, both for local development and in production environments, and haven't had any permissions issues crop up yet. Additionally, after publishing these changes up to the GitHub repo, the issues section has been a bit quieter. </p>
+<p>Something to note though, is that if you're using a production or local environment as the root/root user, you're going to have problems with the steps above. First, it's recommended that any production system uses a non-root sudo user, but if you decide to continue on that path, I've created a separate section in the <a href="https://github.com/aschmelyun/docker-compose-laravel/blob/main/README.md">README</a> of the GitHub I linked at the beginning which should help you with any problems you have.</p>
+<p>If you have any questions on anything in this article, or about using Docker with Laravel and PHP in general, feel free to reach out to me on <a href="https://twitter.com/aschmelyun">Twitter</a>!</p></div>
+    </div>
+</section>        <footer class="text-gray-600 body-font overflow-hidden mt-12">
+    <div class="flex flex-wrap -mx-4 -mb-10 text-center items-center justify-between">
+        <div class="w-full lg:w-1/2 mb-10 px-4 text-center lg:text-left">
+            <p class="mb-2 font-medium text-gray-900">&copy;2021 Andrew Schmelyun</p>
+            <p>This site is powered by <a href="https://github.com/aschmelyun/cleaver" target="_blank" rel="noreferrer" class="inline-block py-0.5 px-2 rounded bg-white text-gray-600 border border-gray-600 text-xs font-medium tracking-widest hover:bg-gray-600 hover:text-white transition-colors duration-200">CLEAVER 🔥🔪</a></p>
+        </div>
+        <div class="w-full lg:w-1/2 mb-10 px-4 text-center lg:text-right">
+            <p class="mb-2 font-medium text-gray-900">Follow me</p>
+                        <p>
+                                    <a href="https://github.com/aschmelyun" target="_blank" rel="noreferrer" class="text-gray-600 hover:text-gray-900 transition-colors duration-200">GitHub</a>
+                                            &nbsp;&mdash;&nbsp;
+                                                        <a href="https://twitter.com/aschmelyun" target="_blank" rel="noreferrer" class="text-gray-600 hover:text-gray-900 transition-colors duration-200">Twitter</a>
+                                            &nbsp;&mdash;&nbsp;
+                                                        <a href="https://youtube.com/aschmelyun" target="_blank" rel="noreferrer" class="text-gray-600 hover:text-gray-900 transition-colors duration-200">YouTube</a>
+                                            &nbsp;&mdash;&nbsp;
+                                                        <a href="https://dev.to/aschmelyun" target="_blank" rel="noreferrer" class="text-gray-600 hover:text-gray-900 transition-colors duration-200">Dev.to</a>
+                                                </p>
+        </div>
+    </div>
+</footer>
+<script type="text/javascript" src="/assets/js/app.js?id=d67be835fdaca4b02a6f"></script>
+    </div>
+</div>
+</body>
+</html>
