@@ -10,7 +10,7 @@ You can find me on:
 - **[Twitch](https://twitch.tv/aschmelyun)** occasionally streaming project development and video research
 - **[Dev.to](https://dev.to/aschmelyun)** creating written tutorials about specific problems or my general experience in the field
 
-I also publish a **[newsletter](https://aschmelyun.substack.com)** called *The VOLT* 1-2 times per month.
+I also publish a **[newsletter](https://aschmelyun.substack.com)** 1-2 times per month.
 
 [![Sponsor Me](https://img.shields.io/static/v1?label=Sponsor%20aschmelyun&message=%E2%9D%A4&logo=GitHub)](https://github.com/sponsors/aschmelyun)
 
