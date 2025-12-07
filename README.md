@@ -1,16 +1,14 @@
-### Hey everyone, [Andrew](https://aschmelyun.com) here 👋
+### Hey there, I'm [Andrew](https://aschmelyun.com) 👋
 
-I'm a self-taught, full-stack developer with a love for Laravel, Vue, and Docker, currently living in sunny Florida.
-
-I've created a few helpful open-source applications and packages like [docker-compose-laravel](https://github.com/aschmelyun/docker-compose-laravel), [Use The Keyboard](https://github.com/aschmelyun/use-the-keyboard), and [Larametrics](https://github.com/aschmelyun/larametrics).
+I'm a self-taught, full-stack software developer with too many ideas and _just_ enough skill to try and build them.
 
 You can find me on:
 
-- **[YouTube](https://youtube.com/aschmelyun)** producing easy-to-digest tutorials for both beginner and experienced developers
-- **[Twitch](https://twitch.tv/aschmelyun)** occasionally streaming project development and video research
-- **[Dev.to](https://dev.to/aschmelyun)** creating written tutorials about specific problems or my general experience in the field
+- **[YouTube](https://youtube.com/@aschmelyun)** producing long-form content on web development and programming experiments
+- **[Twitch](https://twitch.tv/aschmelyun)** occasionally streaming project development and research deep dives
+- **[TikTok](https://tiktok.com/@aschmelyun)** creating short-form tutorials and showing off behind-the-scenes progress
 
-I also publish a **[newsletter](https://aschmelyun.substack.com)** 1-2 times per month.
+I also publish a **[newsletter](https://aschmelyun.substack.com)** 1-2 times per month on interesting things I find, current events in tech, and my general thoughts.
 
 [![Sponsor Me](https://img.shields.io/static/v1?label=Sponsor%20aschmelyun&message=%E2%9D%A4&logo=GitHub)](https://github.com/sponsors/aschmelyun)
 
